@@ -10,12 +10,13 @@ import Global from "./globalStyles";
 import theme from "./globalStyles/theme";
 import { ToastContainer } from "react-toastify";
 import store from "./redux/store";
+import Loader from "./components/loader";
 
 const client = new QueryClient();
 
 const App = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loader type="bubbles" color={theme.colors.primary} />}>
       <Provider store={store}>
         <QueryClientProvider client={client}>
           <ToastContainer />
