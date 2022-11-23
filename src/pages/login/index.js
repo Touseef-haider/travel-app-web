@@ -32,7 +32,7 @@ const Login = () => {
     } else if (user) {
       navigate("/");
     }
-  }, [error, user]);
+  }, [dispatch, navigate, error, user]);
 
   const validationSchema = yup.object({
     email: yup.string().email().required("*email is required"),
