@@ -21,11 +21,12 @@ const initialState = {
 const Register = () => {
   const navigate = useNavigate();
 
-  const [initialValues] = useState(initialState);
+  const [initialValues, setInitialValues] = useState(initialState);
 
   const { mutate } = useMutation((data) => apiService.register(data), {
     onSuccess: (data) => {
       toastify("success", data?.message);
+      setInitialValues(initialState);
     },
     onError: (err) => {
       toastify("error", err?.message);

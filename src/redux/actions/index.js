@@ -1,9 +1,30 @@
-import { LOGIN } from "./index";
-export const Login = () => {
+import { LOGIN } from "../actionTypes";
+import apiService from "../../services/apiService";
+
+export const Login = (data) => {
+  return async (dispatch) => {
+    try {
+      const response = await apiService.login(data);
+      dispatch({
+        type: LOGIN.SUCCESS,
+        payload: response,
+      });
+    } catch (err) {
+      dispatch({
+        type: LOGIN.ERROR,
+        payload: err?.message,
+      });
+    }
+  };
+};
+export const RequestLogin = () => {
   return {
-    type: LOGIN,
-    payload: {
-      full_name: "Touseef",
-    },
+    type: LOGIN.REQUEST,
+  };
+};
+
+export const ResetAuthError = () => {
+  return {
+    type: LOGIN.RESET,
   };
 };

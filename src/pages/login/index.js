@@ -3,13 +3,16 @@ import UnAuthLayout from "../../layouts/unAuthLayout";
 import Input from "../../components/Input/index";
 import * as yup from "yup";
 import { NavLink, useNavigate } from "react-router-dom";
-
+import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../components/button";
-import { useMutation } from "react-query";
-import apiService from "../../services/apiService";
 import toastify from "../../components/toast";
+import {
+  Login as LogIn,
+  RequestLogin,
+  ResetAuthError,
+} from "../../redux/actions/index";
 
 const initialState = {
   email: "",
@@ -17,17 +20,19 @@ const initialState = {
 };
 
 const Login = () => {
-  const [initialValues] = useState(initialState);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading, error, user } = useSelector((state) => state?.auth);
+  const [initialValues] = useState(initialState);
 
-  const { mutate, isLoading } = useMutation((data) => apiService.login(data), {
-    onSuccess: (data) => {
-      toastify("success", data?.message);
-    },
-    onError: (err) => {
-      toastify("error", err?.message);
-    },
-  });
+  useEffect(() => {
+    if (error) {
+      toastify("error", error);
+      dispatch(ResetAuthError());
+    } else if (user) {
+      navigate("/");
+    }
+  }, [error, user]);
 
   const validationSchema = yup.object({
     email: yup.string().email().required("*email is required"),
@@ -40,7 +45,9 @@ const Login = () => {
     validateOnChange: false,
     validateOnBlur: false,
     onSubmit: (data) => {
-      mutate(data);
+      // mutate(data);
+      dispatch(RequestLogin());
+      dispatch(LogIn(data));
     },
   });
 
@@ -87,7 +94,7 @@ const Login = () => {
               size="large"
               type="button"
               hasBackground
-              title={isLoading ? "Please wait ..." : "Log In"}
+              title={loading ? "Please wait ..." : "Log In"}
             />
           </div>
         </div>

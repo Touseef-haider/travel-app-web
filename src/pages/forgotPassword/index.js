@@ -15,13 +15,14 @@ const initialState = {
 };
 
 const ForgotPassword = () => {
-  const [initialValues] = useState(initialState);
+  const [initialValues, setInitialValues] = useState(initialState);
 
   const { mutate, isLoading } = useMutation(
     (data) => apiService.forgotPassword(data),
     {
       onSuccess: (data) => {
         toastify("success", data?.message);
+        setInitialValues(initialState);
       },
       onError: (err) => {
         toastify("error", err?.message);

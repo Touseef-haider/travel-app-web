@@ -1,1 +1,6 @@
-export const LOGIN = "login";
+export const LOGIN = {
+  REQUEST: "request",
+  SUCCESS: "success",
+  ERROR: "error",
+  RESET: "reset",
+};
