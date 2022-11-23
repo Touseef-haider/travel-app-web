@@ -8,6 +8,7 @@ import { ROUTES } from "./routes/constants";
 import Global from "./globalStyles";
 
 import theme from "./globalStyles/theme";
+import { ToastContainer } from "react-toastify";
 // import store from "./redux/store";
 
 const client = new QueryClient();
@@ -17,6 +18,7 @@ const App = () => {
     <Suspense fallback={<div>Loading...</div>}>
       {/* <Provider store={store}> */}
       <QueryClientProvider client={client}>
+        <ToastContainer />
         <ThemeProvider theme={theme}>
           <Global />
           <BrowserRouter>

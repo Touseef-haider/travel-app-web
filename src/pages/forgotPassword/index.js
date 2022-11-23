@@ -8,6 +8,7 @@ import { useState } from "react";
 import Button from "../../components/button";
 import { useMutation } from "react-query";
 import apiService from "../../services/apiService";
+import toastify from "../../components/toast/index";
 
 const initialState = {
   email: "",
@@ -20,10 +21,10 @@ const ForgotPassword = () => {
     (data) => apiService.forgotPassword(data),
     {
       onSuccess: (data) => {
-        console.log(data);
+        toastify("success", data?.message);
       },
       onError: (err) => {
-        console.log(err);
+        toastify("error", err?.message);
       },
     }
   );

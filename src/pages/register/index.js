@@ -9,6 +9,7 @@ import { useState } from "react";
 import Button from "../../components/button";
 import { useMutation } from "react-query";
 import apiService from "../../services/apiService";
+import toastify from "../../components/toast/index";
 
 const initialState = {
   first_name: "",
@@ -24,15 +25,15 @@ const Register = () => {
 
   const { mutate } = useMutation((data) => apiService.register(data), {
     onSuccess: (data) => {
-      console.log(data);
+      toastify("success", data?.message);
     },
     onError: (err) => {
-      console.log(err);
+      toastify("error", err?.message);
     },
   });
 
   const validationSchema = yup.object({
-    first_name: yup.string().email().required("*first name is required"),
+    first_name: yup.string().required("*first name is required"),
     last_name: yup.string().required("*last name is required"),
     email: yup.string().email().required("*email is required"),
     password: yup.string().required("*password is required"),
@@ -41,7 +42,8 @@ const Register = () => {
   const formik = useFormik({
     validationSchema,
     initialValues,
-    validateOnChange: true,
+    validateOnChange: false,
+    validateOnBlur: false,
     onSubmit: (data) => {
       mutate(data);
     },
