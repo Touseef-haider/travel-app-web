@@ -173,6 +173,15 @@ const reset = css`
     text-align: center;
   }
 
+  .display-none {
+    display: none;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   @media (max-width: ${({ theme }) => theme.breakPoints.small}) {
     .two-column-grid {
       grid-template-columns: 1fr !important;

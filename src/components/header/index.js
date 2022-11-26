@@ -11,7 +11,7 @@ const Header = () => {
   return (
     <S.Header>
       <header>
-        <h1>Travel App</h1>
+        <h1 onClick={() => navigate("/")}>Travel App</h1>
         <div className="controls">
           <Button onClick={handleLogin} size="small" title="Login" />
           <Button

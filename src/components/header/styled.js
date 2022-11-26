@@ -14,5 +14,6 @@ export const Header = styled.div`
     font-weight: bold;
     color: ${({ theme }) => theme.colors.primary};
     font-size: 20px;
+    cursor: pointer;
   }
 `;
