@@ -1,12 +1,9 @@
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Edit from "../../assets/edit.svg";
 import * as S from "./styled";
 
-const Alerts = () => {
+const Alerts = ({ alerts, profile }) => {
   const navigate = useNavigate();
-  const alerts = useSelector((state) => state?.alerts);
-  const profile = useSelector((state) => state?.auth.user);
 
   const handleEdit = (id) => {
     navigate(`/experience/?id=${id}?is_edit=true`);

@@ -7,6 +7,7 @@ import Edit from "../../assets/edit.svg";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Button from "../../components/button";
+import Alerts from "../../components/alerts";
 
 const Home = () => {
   const profile = useSelector((state) => state.auth?.user);
@@ -151,66 +152,72 @@ const Home = () => {
           </div>
         </div>
         <div className="section">
-          <div className="album-section">
-            <h1>Album</h1>
-            {data
-              ?.filter((i) => i?.category === "album")
-              .map((album) => (
-                <div className="album" key={album?.title}>
-                  {album?.profile?._id === profile?._id ? (
-                    <img
-                      className="edit"
-                      onClick={() => handleEdit(album?._id)}
-                      src={Edit}
-                      alt="edit"
-                    />
-                  ) : (
-                    ""
-                  )}
+          <div className="grid">
+            <div className="album-section">
+              <h1>Album</h1>
+              {data
+                ?.filter((i) => i?.category === "album")
+                .map((album) => (
+                  <div className="album" key={album?.title}>
+                    {album?.profile?._id === profile?._id ? (
+                      <img
+                        className="edit"
+                        onClick={() => handleEdit(album?._id)}
+                        src={Edit}
+                        alt="edit"
+                      />
+                    ) : (
+                      ""
+                    )}
 
-                  <label htmlFor="h1" className="label">
-                    title:
-                  </label>
-                  <h1>{album?.title}</h1>
-                  <label htmlFor="p" className="label">
-                    description:
-                  </label>
-                  <p>{album?.description}</p>
-                  <label htmlFor="p" className="label">
-                    Category Name:
-                  </label>
-                  <p>{album?.category}</p>
-                  {album?.images?.map((el) => (
-                    <img width="300" src={getImage(el?.data)} alt="album" />
-                  ))}
-                </div>
-              ))}
+                    <label htmlFor="h1" className="label">
+                      title:
+                    </label>
+                    <h1>{album?.title}</h1>
+                    <label htmlFor="p" className="label">
+                      description:
+                    </label>
+                    <p>{album?.description}</p>
+                    <label htmlFor="p" className="label">
+                      Category Name:
+                    </label>
+                    <p>{album?.category}</p>
+                    {album?.images?.map((el) => (
+                      <img width="300" src={getImage(el?.data)} alt="album" />
+                    ))}
+                  </div>
+                ))}
+            </div>
+            <div className="story-section">
+              <h1>Story</h1>
+
+              {data
+                ?.filter((i) => i?.category === "story")
+                .map((story) => (
+                  <div className="story" key={story}>
+                    {story?.profile?._id === profile?._id ? (
+                      <img
+                        className="edit"
+                        onClick={() => handleEdit(story?._id)}
+                        src={Edit}
+                        alt="edit"
+                      />
+                    ) : (
+                      ""
+                    )}
+
+                    <label htmlFor="h1" className="label">
+                      story:
+                    </label>
+                    <p>{story?.description}</p>
+                  </div>
+                ))}
+            </div>
           </div>
-          <div className="story-section">
-            <h1>Story</h1>
-
-            {data
-              ?.filter((i) => i?.category === "story")
-              .map((story) => (
-                <div className="story" key={story}>
-                  {story?.profile?._id === profile?._id ? (
-                    <img
-                      className="edit"
-                      onClick={() => handleEdit(story?._id)}
-                      src={Edit}
-                      alt="edit"
-                    />
-                  ) : (
-                    ""
-                  )}
-
-                  <label htmlFor="h1" className="label">
-                    story:
-                  </label>
-                  <p>{story?.description}</p>
-                </div>
-              ))}
-          </div>
+          <Alerts
+            alerts={data?.filter((i) => i?.category === "alert")}
+            profile={profile}
+          />
         </div>
       </S.Home>
     </AuthLayout>

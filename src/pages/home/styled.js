@@ -74,7 +74,7 @@ export const Home = styled.div`
   .section {
     display: grid;
     padding: 40px;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 4fr 1fr;
   }
   .album {
     padding: 10px;
