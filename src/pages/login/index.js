@@ -30,6 +30,7 @@ const Login = () => {
       toastify("error", error);
       dispatch(ResetAuthError());
     } else if (user) {
+      console.log(user);
       navigate("/");
     }
   }, [dispatch, navigate, error, user]);

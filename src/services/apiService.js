@@ -21,21 +21,25 @@ class ApiService extends BaseService {
     return this.put(`/profiles/${data?._id}`, data);
   }
 
-  // albums
-  addAlbum(data) {
-    return this.post("/albums", data);
+  // experience
+  addExperience(data) {
+    return this.post("/experience", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   }
 
-  getAlbums() {
-    return this.get("/albums");
+  updateExperience(data) {
+    return this.put(`/experience/${data?._id}`, data);
   }
 
-  // stories
-  addStory(data) {
-    return this.post("/stories", data);
+  getExperiences() {
+    return this.get("/experience");
   }
-  getStories() {
-    return this.get("/stories");
+
+  getParticularExperience(id) {
+    return this.get(`/experience/${id}`);
   }
 }
 

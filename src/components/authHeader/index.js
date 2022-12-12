@@ -4,6 +4,8 @@ import { useQuery } from "react-query";
 import apiService from "../../services/apiService";
 import { useState, useRef, useEffect } from "react";
 import { clear } from "../../utils/storage";
+import { useDispatch, useSelector } from "react-redux";
+import { SetProfile } from "../../redux/actions";
 
 function useComponentVisible(initialIsVisible) {
   const [isComponentVisible, setIsComponentVisible] =
@@ -25,10 +27,16 @@ function useComponentVisible(initialIsVisible) {
   return { ref, isComponentVisible, setIsComponentVisible };
 }
 const AuthHeader = () => {
+  const profile = useSelector((state) => state?.auth?.user);
+  const dispatch = useDispatch();
   const { ref, isComponentVisible, setIsComponentVisible } =
     useComponentVisible(false);
   const navigate = useNavigate();
-  const { data } = useQuery("getProfile", () => apiService.getOwnProfile());
+  useQuery("getProfile", () => apiService.getOwnProfile(), {
+    onSuccess: (data) => {
+      dispatch(SetProfile(data));
+    },
+  });
 
   const handleSignOut = () => {
     clear();
@@ -41,11 +49,11 @@ const AuthHeader = () => {
       <div className="controls">
         <div className="links-section">
           <ul>
-            <li>
+            {/* <li>
               <NavLink to="/stories">Stories</NavLink>
-            </li>
+            </li> */}
             <li>
-              <NavLink to="/album">Albums</NavLink>
+              <NavLink to="/experience">Post Experience</NavLink>
             </li>
           </ul>
         </div>
@@ -54,14 +62,14 @@ const AuthHeader = () => {
           className="profile-section"
         >
           <div className="circle">
-            {data?.first_name?.charAt(0)}
-            {data?.last_name?.charAt(0)}
+            {profile?.first_name?.charAt(0)}
+            {profile?.last_name?.charAt(0)}
           </div>
           <div className="profile">
             <p className="name">
-              {data?.first_name} {data?.last_name}
+              {profile?.first_name} {profile?.last_name}
             </p>
-            <p className="email">@{data?.user?.email?.split("@")[0]} </p>
+            <p className="email">@{profile?.user?.email?.split("@")[0]} </p>
           </div>
           {isComponentVisible && (
             <div ref={ref} className="profile-box">

@@ -1,4 +1,4 @@
-import { LOGIN } from "../actionTypes";
+import { LOGIN, SET_PROFILE } from "../actionTypes";
 import apiService from "../../services/apiService";
 
 export const Login = (data) => {
@@ -26,5 +26,12 @@ export const RequestLogin = () => {
 export const ResetAuthError = () => {
   return {
     type: LOGIN.RESET,
+  };
+};
+
+export const SetProfile = (profile) => {
+  return {
+    type: SET_PROFILE,
+    payload: profile,
   };
 };

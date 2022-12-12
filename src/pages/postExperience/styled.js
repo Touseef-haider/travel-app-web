@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Album = styled.div`
+export const Experience = styled.div`
   margin-top: 30px;
   padding: 0 150px;
 

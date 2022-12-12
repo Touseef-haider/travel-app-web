@@ -6,8 +6,7 @@ const Login = lazy(() => import("../pages/login"));
 const Home = lazy(() => import("../pages/home"));
 const ForgotPassword = lazy(() => import("../pages/forgotPassword"));
 const Register = lazy(() => import("../pages/register"));
-const Stories = lazy(() => import("../pages/stories"));
-const Album = lazy(() => import("../pages/album"));
+const PostExperience = lazy(() => import("../pages/postExperience"));
 const Account = lazy(() => import("../pages/account"));
 
 export const ROUTES = [
@@ -39,18 +38,19 @@ export const ROUTES = [
     title: "Register",
     route: UnAuth,
   },
+
   {
-    component: Stories,
+    component: PostExperience,
     exact: true,
-    path: "/stories",
-    title: "Stories",
+    path: "/experience",
+    title: "Share",
     route: Auth,
   },
   {
-    component: Album,
+    component: PostExperience,
     exact: true,
-    path: "/album",
-    title: "Album",
+    path: "/experience/:id",
+    title: "Share",
     route: Auth,
   },
   {

@@ -4,7 +4,6 @@ const Footer = () => {
     <S.Footer>
       <footer className="footer">
         <h1>Jawaad Ahmed</h1>
-        <small>Travelling app</small>
 
         <small className="copy-right">
           © Copyright <b>Jawaad Ahmed</b>. All Rights Reserved

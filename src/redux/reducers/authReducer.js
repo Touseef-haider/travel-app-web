@@ -1,5 +1,5 @@
 import { set } from "../../utils/storage";
-import { LOGIN } from "../actionTypes";
+import { LOGIN, SET_PROFILE } from "../actionTypes";
 
 const initialState = {
   loading: false,
@@ -19,6 +19,8 @@ const authReducer = (state = initialState, action) => {
       return { ...state, loading: false, error: action?.payload };
     case LOGIN.RESET:
       return { ...state, error: "" };
+    case SET_PROFILE:
+      return { ...state, error: "", user: action?.payload };
 
     default:
       return state;
