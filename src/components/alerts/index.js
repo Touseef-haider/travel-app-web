@@ -12,7 +12,7 @@ const Alerts = ({ alerts, profile }) => {
     <S.Alerts>
       <div className="story-section">
         <h1>Alerts</h1>
-        {alerts.map((alert) => (
+        {alerts?.map((alert) => (
           <div className="story" key={alert}>
             {alert?.profile?._id === profile?._id ? (
               <img

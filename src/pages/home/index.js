@@ -182,7 +182,7 @@ const Home = () => {
                       Category Name:
                     </label>
                     <p>{album?.category}</p>
-                    {album?.images?.map((el) => (
+                    {album?.files?.map((el) => (
                       <img width="300" src={getImage(el?.data)} alt="album" />
                     ))}
                   </div>
