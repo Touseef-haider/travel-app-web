@@ -13,6 +13,7 @@ const Alerts = ({ alerts, profile }) => {
       <div className="story-section">
         <h1>Alerts</h1>
         {Array.isArray(alerts) &&
+          alerts?.length > 0 &&
           alerts?.map((alert) => (
             <div className="story" key={alert}>
               {alert?.profile?._id === profile?._id ? (
