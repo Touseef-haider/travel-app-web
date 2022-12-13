@@ -12,25 +12,26 @@ const Alerts = ({ alerts, profile }) => {
     <S.Alerts>
       <div className="story-section">
         <h1>Alerts</h1>
-        {alerts?.map((alert) => (
-          <div className="story" key={alert}>
-            {alert?.profile?._id === profile?._id ? (
-              <img
-                className="edit"
-                onClick={() => handleEdit(alert?._id)}
-                src={Edit}
-                alt="edit"
-              />
-            ) : (
-              ""
-            )}
+        {Array.isArray(alerts) &&
+          alerts?.map((alert) => (
+            <div className="story" key={alert}>
+              {alert?.profile?._id === profile?._id ? (
+                <img
+                  className="edit"
+                  onClick={() => handleEdit(alert?._id)}
+                  src={Edit}
+                  alt="edit"
+                />
+              ) : (
+                ""
+              )}
 
-            <label htmlFor="h1" className="label">
-              story:
-            </label>
-            <p>{alert?.description}</p>
-          </div>
-        ))}
+              <label htmlFor="h1" className="label">
+                story:
+              </label>
+              <p>{alert?.description}</p>
+            </div>
+          ))}
       </div>
     </S.Alerts>
   );
