@@ -6,7 +6,7 @@ const Alerts = ({ alerts, profile }) => {
   const navigate = useNavigate();
 
   const handleEdit = (id) => {
-    navigate(`/experience/?id=${id}?is_edit=true`);
+    navigate(`/update-experience?id=${id}`);
   };
   return (
     <S.Alerts>
@@ -28,7 +28,7 @@ const Alerts = ({ alerts, profile }) => {
               )}
 
               <label htmlFor="h1" className="label">
-                story:
+                title:
               </label>
               <p>{alert?.description}</p>
             </div>

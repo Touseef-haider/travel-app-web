@@ -1,32 +1,12 @@
 /* eslint-disable jsx-a11y/alt-text */
 import AuthLayout from "../../layouts/authLayout";
 import * as S from "./styled";
-import { useQuery } from "react-query";
-import apiService from "../../services/apiService";
-import Edit from "../../assets/edit.svg";
+
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import Button from "../../components/button";
-import Alerts from "../../components/alerts";
 
 const Home = () => {
-  const profile = useSelector((state) => state.auth?.user);
   const navigate = useNavigate();
-  const { data } =
-    useQuery("getExperience", () => apiService.getExperiences(), {
-      onSuccess: (data) => {},
-    }) || [];
-
-  const getImage = (data) => {
-    const str = `data:image/jpeg;base64,${btoa(
-      String.fromCharCode(...new Uint8Array(data))
-    )}`;
-    return str;
-  };
-
-  const handleEdit = (id) => {
-    navigate(`/experience/?id=${id}?is_edit=true`);
-  };
 
   return (
     <AuthLayout showFooter>
@@ -147,79 +127,6 @@ const Home = () => {
               />
             </div>
           </div>
-        </div>
-        <div className="section">
-          <div className="grid">
-            <div className="album-section">
-              <h1>Album</h1>
-              {Array.isArray(data) &&
-                data
-                  ?.filter((i) => i?.category === "album")
-                  .map((album) => (
-                    <div className="album" key={album?.title}>
-                      {album?.profile?._id === profile?._id ? (
-                        <img
-                          className="edit"
-                          onClick={() => handleEdit(album?._id)}
-                          src={Edit}
-                          alt="edit"
-                        />
-                      ) : (
-                        ""
-                      )}
-
-                      <label htmlFor="h1" className="label">
-                        title:
-                      </label>
-                      <h1>{album?.title}</h1>
-                      <label htmlFor="p" className="label">
-                        description:
-                      </label>
-                      <p>{album?.description}</p>
-                      <label htmlFor="p" className="label">
-                        Category Name:
-                      </label>
-                      <p>{album?.category}</p>
-                      {album?.files?.map((el) => (
-                        <img width="300" src={getImage(el?.data)} alt="album" />
-                      ))}
-                    </div>
-                  ))}
-            </div>
-            <div className="story-section">
-              <h1>Story</h1>
-
-              {Array.isArray(data) &&
-                data
-                  ?.filter((i) => i?.category === "story")
-                  .map((story) => (
-                    <div className="story" key={story}>
-                      {story?.profile?._id === profile?._id ? (
-                        <img
-                          className="edit"
-                          onClick={() => handleEdit(story?._id)}
-                          src={Edit}
-                          alt="edit"
-                        />
-                      ) : (
-                        ""
-                      )}
-
-                      <label htmlFor="h1" className="label">
-                        story:
-                      </label>
-                      <p>{story?.description}</p>
-                    </div>
-                  ))}
-            </div>
-          </div>
-          <Alerts
-            alerts={
-              Array.isArray(data) &&
-              data?.filter((i) => i?.category === "alert")
-            }
-            profile={profile}
-          />
         </div>
       </S.Home>
     </AuthLayout>
