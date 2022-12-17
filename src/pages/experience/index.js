@@ -49,7 +49,6 @@ const Experience = () => {
   };
 
   const handleEdit = (id) => {
-    console.log("clicked");
     navigate(`update-experience?id=${id}`);
   };
 
