@@ -9,7 +9,10 @@ const Alerts = ({ alerts, profile }) => {
     navigate(`/update-experience?id=${id}`);
   };
 
-  const filteredAlerts = alerts?.filter((a) => a?.is_active);
+  const filteredAlerts =
+    Array.isArray(alerts) &&
+    alerts?.length > 0 &&
+    alerts?.filter((a) => a?.is_active);
   return (
     <S.Alerts>
       <div className="story-section">

@@ -49,9 +49,6 @@ const AuthHeader = () => {
       <div className="controls">
         <div className="links-section">
           <ul>
-            {/* <li>
-              <NavLink to="/stories">Stories</NavLink>
-            </li> */}
             <li>
               <NavLink to="/experience"> Experience</NavLink>
             </li>

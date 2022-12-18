@@ -77,7 +77,7 @@ const Experience = () => {
               {Array.isArray(data) &&
                 data
                   ?.filter((i) => i?.category === "album")
-                  .map((album) => (
+                  ?.map((album) => (
                     <div className="album" key={album?.title}>
                       {album?.profile?._id === profile?._id ? (
                         <img

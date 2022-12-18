@@ -57,7 +57,7 @@ export const AuthHeader = styled.div`
     position: absolute;
     bottom: -86px;
     width: 150px;
-    z-index: 2;
+    z-index: 22 !important;
     padding: 10px;
     right: 5px;
     margin: 0 5px;
