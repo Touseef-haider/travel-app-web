@@ -171,7 +171,7 @@ const Experience = () => {
 
               {Array.isArray(data) &&
                 data
-                  ?.filter((i) => i?.category === "share_experiece")
+                  ?.filter((i) => i?.category === "share_experience")
                   .map((experience) => (
                     <div className="story" key={experience}>
                       {experience?.profile?._id === profile?._id ? (
