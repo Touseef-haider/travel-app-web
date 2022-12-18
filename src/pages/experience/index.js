@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import Edit from "../../assets/edit.svg";
 import Alerts from "../../components/alerts";
 import { useState } from "react";
+import PostExperience from "../../components/postExperience";
 
 export const categories = [
   {
@@ -38,8 +39,8 @@ const Experience = () => {
   const navigate = useNavigate();
   const [index, setIndex] = useState(0);
   const profile = useSelector((state) => state.auth?.user);
-  const { data } =
-    useQuery(["getExperience"], () => apiService.getExperiences()) || [];
+  const { data, refetch } =
+    useQuery(["getExperience", index], () => apiService.getExperiences()) || [];
 
   const getImage = (data) => {
     const str = `data:image/jpeg;base64,${btoa(
@@ -49,12 +50,13 @@ const Experience = () => {
   };
 
   const handleEdit = (id) => {
-    navigate(`update-experience?id=${id}`);
+    navigate(`/experience?id=${id}`);
   };
 
   return (
     <AuthLayout>
       <S.Experience>
+        <PostExperience handleFetch={refetch} />
         <Tabs selectedIndex={index} onSelect={(index) => setIndex(index)}>
           <TabList>
             {categories?.map((c) => (
