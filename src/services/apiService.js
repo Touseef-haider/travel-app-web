@@ -34,6 +34,25 @@ class ApiService extends BaseService {
     return this.put(`/experience/${data?._id}`, data);
   }
 
+  addCommentInExperience(data) {
+    return this.put(`/experience/comment/${data?._id}`, data);
+  }
+
+  updateCommentInExperience(data) {
+    return this.put(
+      `/experience/comment/${data?._id}/${data?.comment_id}`,
+      data
+    );
+  }
+
+  deleteCommentInExperience(data) {
+    return this.delete(`/experience/comment/${data?._id}/${data?.comment_id}`);
+  }
+
+  deleteExperience(data) {
+    return this.delete(`/experience/${data?._id}`);
+  }
+
   getExperiences() {
     return this.get("/experience");
   }

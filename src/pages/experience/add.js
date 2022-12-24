@@ -22,14 +22,12 @@ const initialState = {
 
 const PostExperience = () => {
   const location = useLocation();
-  console.log(location);
   const search = new URLSearchParams(location.search);
   const [initialValues, setInitialValues] = useState(initialState);
   let inputRef = useRef(null);
 
   const id = search.get("id");
 
-  console.log("id", id);
   const { mutate: add, isLoading } = useMutation(
     "add",
     (data) => apiService.addExperience(data),

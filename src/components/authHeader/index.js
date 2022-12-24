@@ -52,9 +52,9 @@ const AuthHeader = () => {
             <li>
               <NavLink to="/experience"> Experience</NavLink>
             </li>
-            <li>
+            {/* <li>
               <NavLink to="/add-experience"> Add Experience</NavLink>
-            </li>
+            </li> */}
           </ul>
         </div>
         <div

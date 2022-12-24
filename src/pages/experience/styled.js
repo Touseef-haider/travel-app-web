@@ -2,7 +2,10 @@ import styled from "styled-components";
 
 export const Experience = styled.div`
   margin-top: 30px;
-  padding: 0 150px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-gap: 20px;
 
   h1 {
     color: ${({ theme }) => theme.colors.grey};
@@ -49,6 +52,11 @@ export const Experience = styled.div`
     position: relative;
   }
   .edit {
+    position: absolute;
+    right: 40px;
+    cursor: pointer;
+  }
+  .delete {
     position: absolute;
     right: 10px;
     cursor: pointer;

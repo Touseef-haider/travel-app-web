@@ -177,6 +177,14 @@ const reset = css`
     display: none;
   }
 
+  .d-flex {
+    display: flex;
+  }
+
+  .j-end {
+    justify-content: flex-end;
+  }
+
   .grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

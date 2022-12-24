@@ -8,9 +8,11 @@ import "react-tabs/style/react-tabs.css";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Edit from "../../assets/edit.svg";
+import Delete from "../../assets/delete.svg";
 import Alerts from "../../components/alerts";
 import { useState } from "react";
 import PostExperience from "../../components/postExperience";
+import { useMutation } from "react-query";
 
 export const categories = [
   {
@@ -42,6 +44,16 @@ const Experience = () => {
   const { data, refetch } =
     useQuery(["getExperience", index], () => apiService.getExperiences()) || [];
 
+  const deleteMutation = useMutation(
+    "deleteExp",
+    (data) => apiService.deleteExperience(data),
+    {
+      onSuccess: () => {
+        refetch();
+      },
+    }
+  );
+
   const getImage = (data) => {
     const str = `data:image/jpeg;base64,${btoa(
       String.fromCharCode(...new Uint8Array(data))
@@ -52,12 +64,18 @@ const Experience = () => {
   const handleEdit = (id) => {
     navigate(`/experience?id=${id}`);
   };
+  const handleDelete = (id) => {
+    deleteMutation.mutate({ _id: id });
+  };
 
   return (
     <AuthLayout>
       <S.Experience>
-        <PostExperience handleFetch={refetch} />
-        <Tabs selectedIndex={index} onSelect={(index) => setIndex(index)}>
+        <Tabs
+          style={{ padding: "0 50px" }}
+          selectedIndex={index}
+          onSelect={(index) => setIndex(index)}
+        >
           <TabList>
             {categories?.map((c) => (
               <Tab>{c?.item}</Tab>
@@ -71,6 +89,7 @@ const Experience = () => {
                 data?.filter((i) => i?.category === "alert")
               }
               profile={profile}
+              refetch={refetch}
             />
           </TabPanel>
           <TabPanel>
@@ -82,14 +101,27 @@ const Experience = () => {
                   ?.map((album) => (
                     <div className="album" key={album?.title}>
                       {album?.profile?._id === profile?._id ? (
-                        <img
-                          className="edit"
-                          onClick={() => handleEdit(album?._id)}
-                          src={Edit}
-                          alt="edit"
-                        />
+                        <>
+                          <img
+                            className="edit"
+                            onClick={() => handleEdit(album?._id)}
+                            src={Edit}
+                            alt="edit"
+                          />
+                          <img
+                            className="delete"
+                            onClick={() => handleDelete(album?._id)}
+                            src={Delete}
+                            alt="delete"
+                          />
+                          <span style={{ float: "right", marginRight: "60px" }}>
+                            {album?.profile?.first_name}
+                          </span>
+                        </>
                       ) : (
-                        ""
+                        <span style={{ float: "right", marginRight: "0px" }}>
+                          {album?.profile?.first_name} created album
+                        </span>
                       )}
 
                       <label htmlFor="h1" className="label">
@@ -121,14 +153,28 @@ const Experience = () => {
                   .map((story) => (
                     <div className="story" key={story}>
                       {story?.profile?._id === profile?._id ? (
-                        <img
-                          className="edit"
-                          onClick={() => handleEdit(story?._id)}
-                          src={Edit}
-                          alt="edit"
-                        />
+                        <>
+                          <img
+                            className="edit"
+                            onClick={() => handleEdit(story?._id)}
+                            src={Edit}
+                            alt="edit"
+                          />
+                          <img
+                            className="delete"
+                            onClick={() => handleDelete(story?._id)}
+                            src={Delete}
+                            alt="delete"
+                          />
+
+                          <span style={{ float: "right", marginRight: "60px" }}>
+                            {story?.profile?.first_name}
+                          </span>
+                        </>
                       ) : (
-                        ""
+                        <span style={{ float: "right", marginRight: "0px" }}>
+                          {story?.profile?.first_name} created story
+                        </span>
                       )}
 
                       <label htmlFor="h1" className="label">
@@ -149,14 +195,27 @@ const Experience = () => {
                   .map((question) => (
                     <div className="story" key={question}>
                       {question?.profile?._id === profile?._id ? (
-                        <img
-                          className="edit"
-                          onClick={() => handleEdit(question?._id)}
-                          src={Edit}
-                          alt="edit"
-                        />
+                        <>
+                          <img
+                            className="edit"
+                            onClick={() => handleEdit(question?._id)}
+                            src={Edit}
+                            alt="edit"
+                          />
+                          <img
+                            className="delete"
+                            onClick={() => handleDelete(question?._id)}
+                            src={Delete}
+                            alt="delete"
+                          />
+                          <span style={{ float: "right", marginRight: "60px" }}>
+                            {question?.profile?.first_name}
+                          </span>
+                        </>
                       ) : (
-                        ""
+                        <span style={{ float: "right", marginRight: "30px" }}>
+                          {question?.profile?.first_name}
+                        </span>
                       )}
 
                       <label htmlFor="h1" className="label">
@@ -177,14 +236,27 @@ const Experience = () => {
                   .map((experience) => (
                     <div className="story" key={experience}>
                       {experience?.profile?._id === profile?._id ? (
-                        <img
-                          className="edit"
-                          onClick={() => handleEdit(experience?._id)}
-                          src={Edit}
-                          alt="edit"
-                        />
+                        <>
+                          <img
+                            className="edit"
+                            onClick={() => handleEdit(experience?._id)}
+                            src={Edit}
+                            alt="edit"
+                          />
+                          <img
+                            className="delete"
+                            onClick={() => handleDelete(experience?._id)}
+                            src={Delete}
+                            alt="delete"
+                          />
+                          <span style={{ float: "right", marginRight: "60px" }}>
+                            {experience?.profile?.first_name}
+                          </span>
+                        </>
                       ) : (
-                        ""
+                        <span style={{ float: "right", marginRight: "30px" }}>
+                          {experience?.profile?.first_name}
+                        </span>
                       )}
 
                       <label htmlFor="h1" className="label">
@@ -196,6 +268,7 @@ const Experience = () => {
             </div>
           </TabPanel>
         </Tabs>
+        <PostExperience handleFetch={refetch} />
       </S.Experience>
     </AuthLayout>
   );

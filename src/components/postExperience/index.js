@@ -2,15 +2,13 @@ import { useMutation, useQuery } from "react-query";
 import apiService from "../../services/apiService";
 import { useLocation } from "react-router-dom";
 import toastify from "../toast";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import Button from "../button";
 import TextArea from "../textArea/index";
 import Select from "../select";
 import Input from "../Input";
-import AuthLayout from "../../layouts/authLayout";
-import * as S from "../../pages/experience/styled";
 import { categories } from "../../pages/experience/index";
 
 const initialState = {
@@ -22,14 +20,12 @@ const initialState = {
 
 const PostExperience = ({ handleFetch }) => {
   const location = useLocation();
-  console.log(location);
   const search = new URLSearchParams(location.search);
   const [initialValues, setInitialValues] = useState(initialState);
   let inputRef = useRef(null);
 
   const id = search.get("id");
 
-  console.log("id", id);
   const {
     mutate: add,
     isLoading,
@@ -44,6 +40,7 @@ const PostExperience = ({ handleFetch }) => {
       toastify("error", err?.message);
     },
   });
+
   const { mutate: update } = useMutation(
     "update",
     (data) => apiService.updateExperience(data),
@@ -123,79 +120,88 @@ const PostExperience = ({ handleFetch }) => {
   });
   const handleFileChange = () => {};
 
+  useEffect(() => {
+    if (!id) {
+      setInitialValues({
+        ...initialValues,
+        category: categories.find((c) => c.value === "alert").value,
+      });
+    }
+  }, [initialValues, id]);
+
   const { values, errors, handleChange, setFieldValue, handleSubmit } = formik;
   return (
-    // <AuthLayout showFooter>
-    <S.Experience>
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <h1>Experience</h1>
-        <Select
-          label="Category Name"
-          value={values.category}
-          error={errors.category}
-          options={categories}
-          name="category"
+    <form
+      style={{ padding: "0 20px" }}
+      onSubmit={handleSubmit}
+      encType="multipart/form-data"
+    >
+      <h1>Experience</h1>
+      <Select
+        label="Category Name"
+        value={values.category}
+        error={errors.category}
+        options={categories}
+        name="category"
+        onChange={handleChange}
+        placeholder="Add album category name"
+      />
+      {values.category !== "story" && (
+        <Input
+          label="Title"
+          value={values.title}
+          error={errors.title}
+          name="title"
           onChange={handleChange}
-          placeholder="Add album category name"
+          type="text"
+          placeholder="Add album title"
         />
-        {values.category !== "story" && (
-          <Input
-            label="Title"
-            value={values.title}
-            error={errors.title}
-            name="title"
-            onChange={handleChange}
-            type="text"
-            placeholder="Add album title"
-          />
-        )}
-        <TextArea
-          label="Description"
-          value={values.description}
-          error={errors.description}
-          name="description"
-          onChange={handleChange}
-          placeholder="Add album description"
-        />
-        {/* <label htmlFor="file">Photo</label> */}
-        <br />
-        <input
-          id="file"
-          multiple={false}
-          name="files"
-          type="file"
-          hidden={true}
-          className="display-none"
-          ref={inputRef}
-          accept=".jpg,.jpeg,.png,image/*"
-          onChange={handleFileChange}
-        />
-        {/* <Button
+      )}
+      <TextArea
+        label="Description"
+        value={values.description}
+        error={errors.description}
+        name="description"
+        onChange={handleChange}
+        placeholder="Add album description"
+      />
+      {/* <label htmlFor="file">Photo</label> */}
+      <br />
+      <input
+        id="file"
+        multiple={false}
+        name="files"
+        type="file"
+        hidden={true}
+        className="display-none"
+        ref={inputRef}
+        accept=".jpg,.jpeg,.png,image/*"
+        onChange={handleFileChange}
+      />
+      {/* <Button
       hasBackground
       size="small"
       title="Add Photos"
       onClick={() => inputRef.current.click()}
     /> */}
-        <div className="images">
-          {values?.files?.map((album, index) => (
-            <div key={album} className="image-holder">
-              <p onClick={() => handleRemoveImage(index)} className="close-btn">
-                X
-              </p>
-              <img src={id ? getImage(album?.data) : album} alt="images" />
-            </div>
-          ))}
-        </div>
+      <div className="images">
+        {values?.files?.map((album, index) => (
+          <div key={album} className="image-holder">
+            <p onClick={() => handleRemoveImage(index)} className="close-btn">
+              X
+            </p>
+            <img src={id ? getImage(album?.data) : album} alt="images" />
+          </div>
+        ))}
+      </div>
 
-        <Button
-          hasBackground
-          type="submit"
-          size="large"
-          title={isLoading ? "Please wait" : !id ? "Add Album" : "Update Album"}
-        />
-      </form>
-    </S.Experience>
-    // </AuthLayout>
+      <Button
+        hasBackground
+        type="submit"
+        size="large"
+        title={isLoading ? "Please wait" : !id ? "Add Album" : "Update Album"}
+      />
+    </form>
   );
 };
 
