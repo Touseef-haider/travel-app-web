@@ -1,15 +1,15 @@
 /* eslint-disable jsx-a11y/alt-text */
-import AuthLayout from "../../layouts/authLayout";
 import * as S from "./styled";
 
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/button";
+import UnAuthLayout from "../../layouts/unAuthLayout";
 
 const Home = () => {
   const navigate = useNavigate();
 
   return (
-    <AuthLayout showFooter>
+    <UnAuthLayout>
       <S.Home>
         <div className="video-section">
           <video autoPlay muted loop>
@@ -129,7 +129,7 @@ const Home = () => {
           </div>
         </div>
       </S.Home>
-    </AuthLayout>
+    </UnAuthLayout>
   );
 };
 

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { get } from "./storage";
+import { get, clear } from "./storage";
 
 const instance = axios.create({
   baseURL: "http://localhost:8081/api",
@@ -23,7 +23,12 @@ instance.interceptors.request.use(
 // for response
 instance.interceptors.response.use(
   function (response) {
-    return response?.data;
+    if (response?.data?.message?.includes("jwt expired")) {
+      clear();
+      window.location.reload();
+    } else {
+      return response?.data;
+    }
   },
   function (err) {
     const { data } = err?.response;

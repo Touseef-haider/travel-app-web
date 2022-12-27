@@ -5,8 +5,9 @@ const UnAuth = ({ children }) => {
   const token = get("token");
 
   if (token) {
-    return <Navigate to="/" />;
+    return <Navigate to="/experience" />;
   }
+
   return children;
 };
 

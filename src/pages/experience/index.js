@@ -5,14 +5,12 @@ import apiService from "../../services/apiService";
 import { useQuery } from "react-query";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Edit from "../../assets/edit.svg";
-import Delete from "../../assets/delete.svg";
 import Alerts from "../../components/alerts";
 import { useState } from "react";
 import PostExperience from "../../components/postExperience";
 import { useMutation } from "react-query";
+import ExperienceSection from "../../components/experienceSection";
 
 export const categories = [
   {
@@ -38,7 +36,6 @@ export const categories = [
 ];
 
 const Experience = () => {
-  const navigate = useNavigate();
   const [index, setIndex] = useState(0);
   const profile = useSelector((state) => state.auth?.user);
   const { data, refetch } =
@@ -53,20 +50,6 @@ const Experience = () => {
       },
     }
   );
-
-  const getImage = (data) => {
-    const str = `data:image/jpeg;base64,${btoa(
-      String.fromCharCode(...new Uint8Array(data))
-    )}`;
-    return str;
-  };
-
-  const handleEdit = (id) => {
-    navigate(`/experience?id=${id}`);
-  };
-  const handleDelete = (id) => {
-    deleteMutation.mutate({ _id: id });
-  };
 
   return (
     <AuthLayout>
@@ -93,179 +76,48 @@ const Experience = () => {
             />
           </TabPanel>
           <TabPanel>
-            <div className="album-section">
-              <h1>Album</h1>
-              {Array.isArray(data) &&
-                data
-                  ?.filter((i) => i?.category === "album")
-                  ?.map((album) => (
-                    <div className="album" key={album?.title}>
-                      {album?.profile?._id === profile?._id ? (
-                        <>
-                          <img
-                            className="edit"
-                            onClick={() => handleEdit(album?._id)}
-                            src={Edit}
-                            alt="edit"
-                          />
-                          <img
-                            className="delete"
-                            onClick={() => handleDelete(album?._id)}
-                            src={Delete}
-                            alt="delete"
-                          />
-                          <span style={{ float: "right", marginRight: "60px" }}>
-                            {album?.profile?.first_name}
-                          </span>
-                        </>
-                      ) : (
-                        <span style={{ float: "right", marginRight: "0px" }}>
-                          {album?.profile?.first_name} created album
-                        </span>
-                      )}
-
-                      <label htmlFor="h1" className="label">
-                        title:
-                      </label>
-                      <h1>{album?.title}</h1>
-                      <label htmlFor="p" className="label">
-                        description:
-                      </label>
-                      <p>{album?.description}</p>
-                      <label htmlFor="p" className="label">
-                        Category Name:
-                      </label>
-                      <p>{album?.category}</p>
-                      {album?.files?.map((el) => (
-                        <img width="300" src={getImage(el?.data)} alt="album" />
-                      ))}
-                    </div>
-                  ))}
-            </div>
+            <ExperienceSection
+              filterBy="album"
+              deleteMutation={deleteMutation}
+              title="Album"
+              key="album"
+              profile={profile}
+              data={data}
+              refetch={refetch}
+            />
           </TabPanel>
           <TabPanel>
-            <div className="story-section">
-              <h1>Story</h1>
-
-              {Array.isArray(data) &&
-                data
-                  ?.filter((i) => i?.category === "story")
-                  .map((story) => (
-                    <div className="story" key={story}>
-                      {story?.profile?._id === profile?._id ? (
-                        <>
-                          <img
-                            className="edit"
-                            onClick={() => handleEdit(story?._id)}
-                            src={Edit}
-                            alt="edit"
-                          />
-                          <img
-                            className="delete"
-                            onClick={() => handleDelete(story?._id)}
-                            src={Delete}
-                            alt="delete"
-                          />
-
-                          <span style={{ float: "right", marginRight: "60px" }}>
-                            {story?.profile?.first_name}
-                          </span>
-                        </>
-                      ) : (
-                        <span style={{ float: "right", marginRight: "0px" }}>
-                          {story?.profile?.first_name} created story
-                        </span>
-                      )}
-
-                      <label htmlFor="h1" className="label">
-                        story:
-                      </label>
-                      <p>{story?.description}</p>
-                    </div>
-                  ))}
-            </div>
+            <ExperienceSection
+              filterBy="story"
+              deleteMutation={deleteMutation}
+              title="Story"
+              key="story"
+              profile={profile}
+              data={data}
+              refetch={refetch}
+            />
           </TabPanel>
           <TabPanel>
-            <div className="story-section">
-              <h1>Ask Questions</h1>
-
-              {Array.isArray(data) &&
-                data
-                  ?.filter((i) => i?.category === "ask_questions")
-                  .map((question) => (
-                    <div className="story" key={question}>
-                      {question?.profile?._id === profile?._id ? (
-                        <>
-                          <img
-                            className="edit"
-                            onClick={() => handleEdit(question?._id)}
-                            src={Edit}
-                            alt="edit"
-                          />
-                          <img
-                            className="delete"
-                            onClick={() => handleDelete(question?._id)}
-                            src={Delete}
-                            alt="delete"
-                          />
-                          <span style={{ float: "right", marginRight: "60px" }}>
-                            {question?.profile?.first_name}
-                          </span>
-                        </>
-                      ) : (
-                        <span style={{ float: "right", marginRight: "30px" }}>
-                          {question?.profile?.first_name}
-                        </span>
-                      )}
-
-                      <label htmlFor="h1" className="label">
-                        question:
-                      </label>
-                      <p>{question?.description}</p>
-                    </div>
-                  ))}
-            </div>
+            <ExperienceSection
+              filterBy="ask_question"
+              deleteMutation={deleteMutation}
+              title="Ask Question"
+              key="ask_question"
+              profile={profile}
+              data={data}
+              refetch={refetch}
+            />
           </TabPanel>
           <TabPanel>
-            <div className="story-section">
-              <h1>Share Experience</h1>
-
-              {Array.isArray(data) &&
-                data
-                  ?.filter((i) => i?.category === "share_experience")
-                  .map((experience) => (
-                    <div className="story" key={experience}>
-                      {experience?.profile?._id === profile?._id ? (
-                        <>
-                          <img
-                            className="edit"
-                            onClick={() => handleEdit(experience?._id)}
-                            src={Edit}
-                            alt="edit"
-                          />
-                          <img
-                            className="delete"
-                            onClick={() => handleDelete(experience?._id)}
-                            src={Delete}
-                            alt="delete"
-                          />
-                          <span style={{ float: "right", marginRight: "60px" }}>
-                            {experience?.profile?.first_name}
-                          </span>
-                        </>
-                      ) : (
-                        <span style={{ float: "right", marginRight: "30px" }}>
-                          {experience?.profile?.first_name}
-                        </span>
-                      )}
-
-                      <label htmlFor="h1" className="label">
-                        experience:
-                      </label>
-                      <p>{experience?.description}</p>
-                    </div>
-                  ))}
-            </div>
+            <ExperienceSection
+              filterBy="share_experience"
+              deleteMutation={deleteMutation}
+              title="Share Experience"
+              key="share_experience"
+              profile={profile}
+              data={data}
+              refetch={refetch}
+            />
           </TabPanel>
         </Tabs>
         <PostExperience handleFetch={refetch} />

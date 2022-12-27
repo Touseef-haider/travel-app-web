@@ -31,7 +31,7 @@ const Login = () => {
       dispatch(ResetAuthError());
     } else if (user) {
       console.log(user);
-      navigate("/");
+      navigate("/experience");
     }
   }, [dispatch, navigate, error, user]);
 
