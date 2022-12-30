@@ -79,7 +79,6 @@ const Experience = () => {
             <ExperienceSection
               filterBy="album"
               deleteMutation={deleteMutation}
-              title="Album"
               key="album"
               profile={profile}
               data={data}
@@ -90,7 +89,6 @@ const Experience = () => {
             <ExperienceSection
               filterBy="story"
               deleteMutation={deleteMutation}
-              title="Story"
               key="story"
               profile={profile}
               data={data}
@@ -101,7 +99,6 @@ const Experience = () => {
             <ExperienceSection
               filterBy="ask_question"
               deleteMutation={deleteMutation}
-              title="Ask Question"
               key="ask_question"
               profile={profile}
               data={data}
@@ -112,7 +109,6 @@ const Experience = () => {
             <ExperienceSection
               filterBy="share_experience"
               deleteMutation={deleteMutation}
-              title="Share Experience"
               key="share_experience"
               profile={profile}
               data={data}

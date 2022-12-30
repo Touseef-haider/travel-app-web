@@ -45,6 +45,13 @@ class ApiService extends BaseService {
     );
   }
 
+  updateLikeInExperience(data) {
+    return this.put(
+      `/experience/like/${data?._id}/${data?.comment_id}?is_liked=${data?.is_liked}`,
+      data
+    );
+  }
+
   deleteCommentInExperience(data) {
     return this.delete(`/experience/comment/${data?._id}/${data?.comment_id}`);
   }

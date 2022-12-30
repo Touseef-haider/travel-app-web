@@ -7,7 +7,6 @@ import Comment from "../comment";
 const ExperienceSection = ({
   data,
   profile,
-  title,
   deleteMutation,
   filterBy,
   refetch,
@@ -22,12 +21,11 @@ const ExperienceSection = ({
   };
   return (
     <S.ExperienceSection>
-      <h1>{title}</h1>
       {Array.isArray(data) &&
         data
           ?.filter((i) => i?.category === filterBy)
           ?.map((cat) => (
-            <div className="section" key={cat?.title}>
+            <div className="section" key={cat?.description}>
               {cat?.profile?._id === profile?._id ? (
                 <>
                   <img
@@ -51,22 +49,11 @@ const ExperienceSection = ({
                   {cat?.profile?.first_name} created album
                 </span>
               )}
-
-              <label htmlFor="h1" className="label">
-                title:
-              </label>
-              <h1>{cat?.title}</h1>
               <label htmlFor="p" className="label">
                 description:
               </label>
-              <p>{cat?.description}</p>
-              <label htmlFor="p" className="label">
-                Category Name:
-              </label>
-              <p>{cat?.category}</p>
-              {/* {album?.files?.map((el) => (
-                <img width="300" src={getImage(el?.data)} alt="album" />
-              ))} */}
+              <div dangerouslySetInnerHTML={{ __html: cat?.description }}></div>
+
               <Comment refetch={refetch} data={cat} key="comment" />
             </div>
           ))}

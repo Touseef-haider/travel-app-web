@@ -2,17 +2,15 @@ import { useMutation, useQuery } from "react-query";
 import apiService from "../../services/apiService";
 import { useLocation } from "react-router-dom";
 import toastify from "../toast";
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import Button from "../button";
-import TextArea from "../textArea/index";
 import Select from "../select";
-import Input from "../Input";
 import { categories } from "../../pages/experience/index";
+import Quill from "../quill";
 
 const initialState = {
-  title: "",
   description: "",
   category: "",
   files: [],
@@ -22,7 +20,6 @@ const PostExperience = ({ handleFetch }) => {
   const location = useLocation();
   const search = new URLSearchParams(location.search);
   const [initialValues, setInitialValues] = useState(initialState);
-  let inputRef = useRef(null);
 
   const id = search.get("id");
 
@@ -57,34 +54,13 @@ const PostExperience = ({ handleFetch }) => {
 
   useQuery("get", () => apiService.getParticularExperience(id), {
     enabled: !!id,
+    retry: 3,
     onSuccess: (data) => {
-      console.log("data");
       setInitialValues(data);
     },
   });
 
-  const handleRemoveImage = (index) => {
-    const arr = [...values?.images];
-    arr.splice(index, 1);
-    setFieldValue("files", arr);
-  };
-
-  const getImage = (data) => {
-    console.log(data);
-    const str = `data:image/jpeg;base64,${btoa(
-      String.fromCharCode(...new Uint8Array(data))
-    )}`;
-    console.log(str);
-    // const str = `data:image/jpg;base64,${data?.toString("base64")}`;
-    return str;
-  };
-
   const validationSchema = yup.object({
-    title: yup.string().when("category", {
-      is: "story",
-      then: yup.string(),
-      otherwise: yup.string().required("*title is required"),
-    }),
     description: yup
       .string()
       .min(5, "*too short")
@@ -118,7 +94,6 @@ const PostExperience = ({ handleFetch }) => {
       }
     },
   });
-  const handleFileChange = () => {};
 
   useEffect(() => {
     if (!id) {
@@ -127,7 +102,7 @@ const PostExperience = ({ handleFetch }) => {
         category: categories.find((c) => c.value === "alert").value,
       });
     }
-  }, [initialValues, id]);
+  }, []);
 
   const { values, errors, handleChange, setFieldValue, handleSubmit } = formik;
   return (
@@ -146,54 +121,21 @@ const PostExperience = ({ handleFetch }) => {
         onChange={handleChange}
         placeholder="Add album category name"
       />
-      {values.category !== "story" && (
-        <Input
-          label="Title"
-          value={values.title}
-          error={errors.title}
-          name="title"
-          onChange={handleChange}
-          type="text"
-          placeholder="Add album title"
-        />
-      )}
-      <TextArea
+
+      <Quill
+        value={values.description}
+        name="description"
+        onChange={(e) => setFieldValue("description", e)}
+      />
+
+      {/* <TextArea
         label="Description"
         value={values.description}
         error={errors.description}
         name="description"
         onChange={handleChange}
         placeholder="Add album description"
-      />
-      {/* <label htmlFor="file">Photo</label> */}
-      <br />
-      <input
-        id="file"
-        multiple={false}
-        name="files"
-        type="file"
-        hidden={true}
-        className="display-none"
-        ref={inputRef}
-        accept=".jpg,.jpeg,.png,image/*"
-        onChange={handleFileChange}
-      />
-      {/* <Button
-      hasBackground
-      size="small"
-      title="Add Photos"
-      onClick={() => inputRef.current.click()}
-    /> */}
-      <div className="images">
-        {values?.files?.map((album, index) => (
-          <div key={album} className="image-holder">
-            <p onClick={() => handleRemoveImage(index)} className="close-btn">
-              X
-            </p>
-            <img src={id ? getImage(album?.data) : album} alt="images" />
-          </div>
-        ))}
-      </div>
+      /> */}
 
       <Button
         hasBackground

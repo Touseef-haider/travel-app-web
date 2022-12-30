@@ -1,6 +1,7 @@
 import Button from "../button";
 import { useState } from "react";
 import Edit from "../../assets/edit.svg";
+import Like from "../../assets/blackLike.png";
 import Delete from "../../assets/delete.svg";
 import * as S from "./styled";
 import { useMutation } from "react-query";
@@ -8,6 +9,8 @@ import * as yup from "yup";
 import apiService from "../../services/apiService";
 import { useFormik } from "formik";
 import Input from "../Input";
+import { useSelector } from "react-redux";
+import theme from "../../globalStyles/theme";
 
 const initialSchema = {
   comment: "",
@@ -15,6 +18,7 @@ const initialSchema = {
 
 const Comment = ({ data, refetch }) => {
   const [id, setId] = useState("");
+  const profile = useSelector((state) => state.auth.user);
   const [open, setOpen] = useState(false);
   const [commentId, setCommentId] = useState("");
   const [initialState, setInitialState] = useState(initialSchema);
@@ -28,6 +32,16 @@ const Comment = ({ data, refetch }) => {
         setId("");
         setOpen(false);
         setInitialState({ ...initialSchema, comment: "" });
+      },
+    }
+  );
+
+  const likeMutation = useMutation(
+    (data) => apiService.updateLikeInExperience(data),
+    {
+      onSuccess: (data) => {
+        console.log("tis i si ", data);
+        refetch();
       },
     }
   );
@@ -75,11 +89,47 @@ const Comment = ({ data, refetch }) => {
 
   const { values, errors, handleChange, handleSubmit } = formik;
 
+  const handleLike = (e, expId, commentId, isLiked) => {
+    console.log({
+      expId,
+      commentId,
+    });
+    likeMutation.mutate({
+      _id: expId,
+      comment_id: commentId,
+      is_liked: isLiked ?? true,
+    });
+  };
+
   return (
     <S.Comment>
       {data?.comments?.map((c) => (
         <div className="comment">
-          <span>{c?.by?.first_name}</span>
+          <div
+            className="like"
+            style={{
+              backgroundColor: `${
+                c?.liked_by?.includes(profile?._id) ? theme.colors.primary : ""
+              }`,
+            }}
+          >
+            <img
+              onClick={(e) =>
+                handleLike(
+                  e,
+                  data?._id,
+                  c?._id,
+                  c?.liked_by?.includes(profile?._id)
+                )
+              }
+              src={Like}
+              width={25}
+              height={25}
+              alt="like button"
+            />
+            <span className="liked-length primary">{c?.liked_by.length}</span>
+          </div>
+          <span className="primary">{c?.by?.first_name}</span>
           <p>{c?.message}</p>
           <img
             className="edit-comment"
@@ -110,6 +160,7 @@ const Comment = ({ data, refetch }) => {
 
       {open && (
         <Input
+          style={{ marginTop: "20px" }}
           value={values.comment}
           error={errors.comment}
           name="comment"
