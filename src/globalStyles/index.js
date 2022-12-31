@@ -8,12 +8,6 @@ const reset = css`
   applet,
   object,
   iframe,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
   p,
   blockquote,
   pre,
@@ -159,7 +153,15 @@ const reset = css`
   }
 
   .secondary {
-    color: ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.secondary};
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .pt-150 {
+    padding-top: 150px;
   }
 
   .two-column-grid {
@@ -179,6 +181,12 @@ const reset = css`
 
   .d-flex {
     display: flex;
+  }
+  .j-center {
+    justify-content: center;
+  }
+  .j-space-around {
+    justify-content: space-around;
   }
 
   .j-end {
