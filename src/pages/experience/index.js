@@ -97,7 +97,7 @@ const Experience = () => {
           </TabPanel>
           <TabPanel>
             <ExperienceSection
-              filterBy="ask_question"
+              filterBy="ask_questions"
               deleteMutation={deleteMutation}
               key="ask_question"
               profile={profile}

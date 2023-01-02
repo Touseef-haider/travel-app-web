@@ -6,6 +6,7 @@ import { useState, useRef, useEffect } from "react";
 import { clear } from "../../utils/storage";
 import { useDispatch, useSelector } from "react-redux";
 import { SetProfile } from "../../redux/actions";
+import Logo from "../../assets/newLogo.png";
 
 function useComponentVisible(initialIsVisible) {
   const [isComponentVisible, setIsComponentVisible] =
@@ -45,7 +46,17 @@ const AuthHeader = () => {
 
   return (
     <S.AuthHeader>
-      <h1 onClick={() => navigate("/")}>Travel App</h1>
+      <img
+        width={100}
+        style={{
+          backgroundColor: "transparent",
+          marginTop: "-5px",
+          cursor: "pointer",
+        }}
+        height={100}
+        src={Logo}
+        onClick={() => navigate("/")}
+      />
       <div className="controls">
         <div className="links-section">
           <ul>

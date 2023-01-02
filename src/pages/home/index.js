@@ -2,7 +2,7 @@
 import * as S from "./styled";
 
 import { useNavigate } from "react-router-dom";
-import Logo from "../../assets/triptok.png";
+import Logo from "../../assets/newLogo.png";
 import i1 from "../../assets/1.jpg";
 import i2 from "../../assets/2.jpg";
 import i3 from "../../assets/3.jpg";
@@ -15,15 +15,27 @@ import u2 from "../../assets/user2.jpg";
 import u3 from "../../assets/user3.jpg";
 import Button from "../../components/button";
 import InputWithButton from "../../components/Input/inputWithButton";
+import { useQuery } from "react-query";
+import apiService from "../../services/apiService";
 
 const Home = () => {
   const navigate = useNavigate();
+
+  const { data } = useQuery("alerts", () => apiService.getExperiences());
+
+  const alerts = data?.filter((d) => d?.category === "alert");
+  console.log(alerts);
 
   return (
     <S.Home>
       <section className="banner">
         <header>
-          <img width={200} height={50} src={Logo} />
+          <img
+            width={100}
+            style={{ backgroundColor: "transparent", marginTop: "-25px" }}
+            height={100}
+            src={Logo}
+          />
           <Button
             onClick={() => navigate("/login")}
             style={{ borderRadius: "20px", padding: "0 25px" }}
@@ -136,6 +148,28 @@ const Home = () => {
           </div>
         </div>
       </section>
+      <section className="alerts">
+        {Array.isArray(alerts) &&
+          alerts.map((d) => (
+            <div className="alert">
+              <div className="alert-card">
+                <div className="profile-photo">
+                  {String(d?.profile?.first_name).charAt(0).toUpperCase()}{" "}
+                  {String(d?.profile?.last_name).charAt(0).toUpperCase()}
+                </div>
+                <div className="details">
+                  <span className="bold">
+                    {d?.profile?.fast_name} {d?.profile?.last_name}
+                  </span>
+                  <span>posted at </span>
+                  <span className="bold">Murree Islambad</span>
+                </div>
+              </div>
+              <br />
+              <p dangerouslySetInnerHTML={{ __html: d?.description }}></p>
+            </div>
+          ))}
+      </section>
       <section className="reviews">
         <h1 className="text-center">User Reviews</h1>
         <div className="d-flex j-center" style={{ gap: "30px", width: "100%" }}>
@@ -182,7 +216,7 @@ const Home = () => {
       </section>
       <footer>
         <div className="logo">
-          <img src={Logo} />
+          <img src={Logo} style={{ marginTop: "-30px" }} />
           <p style={{ width: "300px" }}>This is travelling app</p>
         </div>
         <div className="features">

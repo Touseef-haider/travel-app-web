@@ -6,7 +6,6 @@ import TopDest from "../../assets/banner2.jpg";
 export const Home = styled.div`
   .banner {
     height: 100vh;
-
     background-repeat: no-repeat;
     background-size: cover;
     background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
@@ -116,6 +115,39 @@ export const Home = styled.div`
     background: rgba(0, 0, 0, 0.4);
     text-align: center;
   }
+
+  .alerts {
+    display: grid;
+    padding: 50px;
+    gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .alert {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 100, 0.2) !important;
+    padding: 20px;
+    margin-bottom: 15px;
+  }
+
+  .alert-card {
+    display: flex;
+    align-items: center;
+  }
+
+  .alert-card .profile-photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: grey;
+  }
+
+  .alert-card .details {
+    padding: 5px;
+  }
+
   .reviews {
     height: 70vh;
     padding: 0 40px 70px 0;

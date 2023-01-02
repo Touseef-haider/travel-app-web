@@ -193,6 +193,10 @@ const reset = css`
     justify-content: flex-end;
   }
 
+  .bold {
+    font-weight: bold;
+  }
+
   .grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
