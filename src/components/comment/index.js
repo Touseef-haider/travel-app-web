@@ -90,10 +90,6 @@ const Comment = ({ data, refetch }) => {
   const { values, errors, handleChange, handleSubmit } = formik;
 
   const handleLike = (e, expId, commentId, isLiked) => {
-    console.log({
-      expId,
-      commentId,
-    });
     likeMutation.mutate({
       _id: expId,
       comment_id: commentId,

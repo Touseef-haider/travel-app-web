@@ -29,9 +29,10 @@ const Login = () => {
     if (error) {
       toastify("error", error);
       dispatch(ResetAuthError());
-    } else if (user) {
-      console.log(user);
+    } else if (user && user?._id) {
       navigate("/experience");
+    } else if (user && !user?._id && user?.message) {
+      toastify("error", user?.message);
     }
   }, [dispatch, navigate, error, user]);
 

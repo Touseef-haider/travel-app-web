@@ -3,6 +3,10 @@ import Delete from "../../assets/delete.svg";
 import { useNavigate } from "react-router-dom";
 import * as S from "./styled";
 import Comment from "../comment";
+import Like from "../../assets/blackLike.png";
+import theme from "../../globalStyles/theme";
+import { useMutation } from "react-query";
+import apiService from "../../services/apiService";
 
 const ExperienceSection = ({
   data,
@@ -13,11 +17,26 @@ const ExperienceSection = ({
 }) => {
   const navigate = useNavigate();
 
+  const likeMutation = useMutation(
+    (data) => apiService.updateLikeOnPostExperience(data),
+    {
+      onSuccess: (data) => {
+        refetch();
+      },
+    }
+  );
   const handleEdit = (id) => {
     navigate(`/experience?id=${id}`);
   };
   const handleDelete = (id) => {
     deleteMutation.mutate({ _id: id });
+  };
+
+  const handleLike = (e, expId, isLiked) => {
+    likeMutation.mutate({
+      _id: expId,
+      is_liked: isLiked ?? true,
+    });
   };
   return (
     <S.ExperienceSection>
@@ -26,6 +45,33 @@ const ExperienceSection = ({
           ?.filter((i) => i?.category === filterBy)
           ?.map((cat) => (
             <div className="section" key={cat?.description}>
+              <div
+                className="like"
+                style={{
+                  backgroundColor: `${
+                    cat?.liked_by?.includes(profile?._id)
+                      ? theme.colors.primary
+                      : ""
+                  }`,
+                }}
+              >
+                <img
+                  onClick={(e) => {
+                    handleLike(
+                      e,
+                      cat?._id,
+                      cat?.liked_by?.includes(profile?._id)
+                    );
+                  }}
+                  src={Like}
+                  width={25}
+                  height={25}
+                  alt="like button"
+                />
+                <span className="liked-length primary">
+                  {cat?.liked_by.length}
+                </span>
+              </div>
               {cat?.profile?._id === profile?._id ? (
                 <>
                   <img
