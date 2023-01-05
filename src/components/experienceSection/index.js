@@ -99,6 +99,13 @@ const ExperienceSection = ({
                 description:
               </label>
               <div dangerouslySetInnerHTML={{ __html: cat?.description }}></div>
+              <div className="gallery">
+                {Array.isArray(cat?.images) && cat?.images.length > 0
+                  ? cat?.images?.map((img) => (
+                      <img width={100} height={100} src={img} alt="img" />
+                    ))
+                  : ""}
+              </div>
 
               <Comment refetch={refetch} data={cat} key="comment" />
             </div>

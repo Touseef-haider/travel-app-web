@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import * as S from "./styled";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
@@ -63,9 +64,6 @@ const AuthHeader = () => {
             <li>
               <NavLink to="/experience"> Experience</NavLink>
             </li>
-            {/* <li>
-              <NavLink to="/add-experience"> Add Experience</NavLink>
-            </li> */}
           </ul>
         </div>
         <div

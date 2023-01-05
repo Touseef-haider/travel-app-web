@@ -21,7 +21,6 @@ export const AuthHeader = styled.div`
   li {
     padding: 0 30px;
   }
-
   a {
     color: ${({ theme }) => theme.colors.grey};
     text-decoration: none;
@@ -55,14 +54,17 @@ export const AuthHeader = styled.div`
 
   .profile-box {
     position: absolute;
-    bottom: -86px;
+    bottom: -95px;
     width: 150px;
     z-index: 22 !important;
     padding: 10px;
     right: 5px;
+    border: 1px solid ${({ theme }) => theme.colors.primary};
+    border-top: none;
     margin: 0 5px;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1) !important;
   }
+
   .profile-box a {
     margin: 10px;
     display: block;

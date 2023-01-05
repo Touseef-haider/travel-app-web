@@ -47,4 +47,9 @@ export const ExperienceSection = styled.div`
     right: 10px;
     cursor: pointer;
   }
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    /* gap: 15px; */
+  }
 `;

@@ -1,31 +1,45 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/img-redundant-alt */
+import React, { useRef } from "react";
 import { useMutation, useQuery } from "react-query";
 import apiService from "../../services/apiService";
 import { useLocation } from "react-router-dom";
 import toastify from "../toast";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
+import Delete from "../../assets/delete.svg";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import Select from "../select";
 import Button from "../button";
 import { categories } from "../../pages/experience/index";
 import Quill from "../quill";
-import Input from "../Input";
-import HOCLoading from "../loadingHoc";
 
 const initialState = {
   description: "",
   category: "",
-  files: [],
 };
 
-const PostExperience = ({ handleFetch, setIsLoading }) => {
+const PostExperience = ({ handleFetch, images, setImages }) => {
   const location = useLocation();
-  const fileRef = useRef(null);
   const search = new URLSearchParams(location.search);
+  const fileRef = useRef(null);
   const [initialValues, setInitialValues] = useState(initialState);
 
   const id = search.get("id");
+  const { mutate: imageMutation } = useMutation(
+    "img",
+    (data) => apiService.addFile(data),
+    {
+      onSuccess: ({ data }) => {
+        const img = [...images];
+        img.push(data?.Location);
+        setImages(img);
+      },
+      onError: (error) => {
+        toastify("error", error.message);
+      },
+    }
+  );
 
   const {
     mutate: add,
@@ -35,6 +49,7 @@ const PostExperience = ({ handleFetch, setIsLoading }) => {
     onSuccess: (data) => {
       toastify("success", data?.message);
       setInitialValues(initialState);
+      setImages([]);
       reset();
     },
     onError: (err) => {
@@ -61,6 +76,7 @@ const PostExperience = ({ handleFetch, setIsLoading }) => {
     retry: 3,
     onSuccess: (data) => {
       setInitialValues(data);
+      setImages(data?.images);
     },
   });
 
@@ -70,7 +86,6 @@ const PostExperience = ({ handleFetch, setIsLoading }) => {
       .min(5, "*too short")
       .required("*description is required"),
     category: yup.string().required("*category is required"),
-    files: yup.array(),
   });
 
   const formik = useFormik({
@@ -81,17 +96,15 @@ const PostExperience = ({ handleFetch, setIsLoading }) => {
     validateOnBlur: false,
     onSubmit: (data, { resetForm }) => {
       if (data?._id) {
-        update(data);
+        update({ ...data, images: [...images] });
       } else {
-        const formData = new FormData();
-        data?.files?.forEach((i) => {
-          formData.append("files", i);
-        });
         add(
-          { ...data, images: formData },
+          { ...data, images: [...images] },
           {
             onSuccess: () => {
               resetForm();
+              setInitialValues(initialState);
+              handleFetch();
             },
           }
         );
@@ -108,32 +121,27 @@ const PostExperience = ({ handleFetch, setIsLoading }) => {
     }
   }, []);
 
-  const { values, errors, handleChange, setFieldValue, handleSubmit } = formik;
-  console.log("values", values);
+  console.log("file***********", images);
 
-  const addFile = useMutation((data) => apiService.addFile(data), {
-    onSuccess: ({ data }) => {
-      console.log("dafa", data);
-      setIsLoading(false);
-      setFieldValue("files", data?.Location);
-    },
-    onError: (error) => {
-      toastify("error", error.message);
-      setIsLoading(false);
-    },
-  });
+  const { values, errors, handleChange, setFieldValue, handleSubmit } = formik;
 
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setIsLoading(true);
-    const formData = new FormData();
-    formData.append("file", file);
+    if (e.target.files.length) {
+      const file = e.target.files[0];
+      const formData = new FormData();
+      formData.append("file", file);
+      imageMutation(formData);
+      e.target.value = "";
+    }
+  };
 
-    addFile.mutate(formData);
+  const handleRemoveImage = (ind) => {
+    const filteredImg = images.filter((img, i) => i !== ind);
+    setImages(filteredImg);
   };
 
   return (
-    <form style={{ padding: "0 20px" }} onSubmit={handleSubmit}>
+    <div>
       <h1>Experience</h1>
       <Select
         label="Category Name"
@@ -153,28 +161,42 @@ const PostExperience = ({ handleFetch, setIsLoading }) => {
 
       <br />
 
-      <Input
-        type="file"
+      <input
         ref={fileRef}
-        // style={{ display: "none" }}
+        type="file"
+        style={{ display: "none" }}
         onChange={handleFileChange}
       />
 
-      {/* <Button
+      <Button
         type="button"
         size="large"
         title="Upload Image"
-        onClick={() => {
-          console.log("hello");
+        onClick={(e) => {
+          e.stopPropagation();
           fileRef.current.click();
         }}
-      /> */}
+      />
 
       <br />
 
-      <div>
-        {values.files.map((file) => (
-          <img src={file} alt="image" width={50} height={50} />
+      <div className="images">
+        {images?.map((file, index) => (
+          <div key={file + index} className="image-holder">
+            <img
+              src={Delete}
+              onClick={() => handleRemoveImage(index)}
+              alt="delete"
+              className="image-delete-btn"
+            />
+            <img
+              src={file}
+              className="image"
+              alt="image"
+              width={50}
+              height={50}
+            />
+          </div>
         ))}
       </div>
 
@@ -182,10 +204,11 @@ const PostExperience = ({ handleFetch, setIsLoading }) => {
         hasBackground
         type="submit"
         size="large"
+        onClick={handleSubmit}
         title={isLoading ? "Please wait" : !id ? "Add Album" : "Update Album"}
       />
-    </form>
+    </div>
   );
 };
 
-export default HOCLoading(PostExperience);
+export default PostExperience;

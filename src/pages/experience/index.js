@@ -37,6 +37,8 @@ export const categories = [
 
 const Experience = () => {
   const [index, setIndex] = useState(0);
+  const [images, setImages] = useState([]);
+
   const profile = useSelector((state) => state.auth?.user);
   const { data, refetch } =
     useQuery(["getExperience", index], () => apiService.getExperiences()) || [];
@@ -116,7 +118,11 @@ const Experience = () => {
             />
           </TabPanel>
         </Tabs>
-        <PostExperience handleFetch={refetch} />
+        <PostExperience
+          images={images}
+          setImages={setImages}
+          handleFetch={refetch}
+        />
       </S.Experience>
     </AuthLayout>
   );

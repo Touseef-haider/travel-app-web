@@ -38,7 +38,7 @@ export const Comment = styled.div`
   .edit-comment {
     position: absolute;
     cursor: pointer;
-    right: 25px;
+    right: 40px;
     top: 5px;
   }
   .delete-comment {
