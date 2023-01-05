@@ -74,6 +74,10 @@ class ApiService extends BaseService {
   getParticularExperience(id) {
     return this.get(`/experience/${id}`);
   }
+
+  addFile(file){
+    return this.post('/upload',file)
+  }
 }
 
 export default new ApiService();

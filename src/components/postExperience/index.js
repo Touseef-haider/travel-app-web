@@ -1,14 +1,17 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import { useMutation, useQuery } from "react-query";
 import apiService from "../../services/apiService";
 import { useLocation } from "react-router-dom";
 import toastify from "../toast";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import Button from "../button";
 import Select from "../select";
+import Button from "../button";
 import { categories } from "../../pages/experience/index";
 import Quill from "../quill";
+import Input from "../Input";
+import HOCLoading from "../loadingHoc";
 
 const initialState = {
   description: "",
@@ -16,8 +19,9 @@ const initialState = {
   files: [],
 };
 
-const PostExperience = ({ handleFetch }) => {
+const PostExperience = ({ handleFetch, setIsLoading }) => {
   const location = useLocation();
+  const fileRef = useRef(null);
   const search = new URLSearchParams(location.search);
   const [initialValues, setInitialValues] = useState(initialState);
 
@@ -105,12 +109,31 @@ const PostExperience = ({ handleFetch }) => {
   }, []);
 
   const { values, errors, handleChange, setFieldValue, handleSubmit } = formik;
+  console.log("values", values);
+
+  const addFile = useMutation((data) => apiService.addFile(data), {
+    onSuccess: ({ data }) => {
+      console.log("dafa", data);
+      setIsLoading(false);
+      setFieldValue("files", data?.Location);
+    },
+    onError: (error) => {
+      toastify("error", error.message);
+      setIsLoading(false);
+    },
+  });
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setIsLoading(true);
+    const formData = new FormData();
+    formData.append("file", file);
+
+    addFile.mutate(formData);
+  };
+
   return (
-    <form
-      style={{ padding: "0 20px" }}
-      onSubmit={handleSubmit}
-      encType="multipart/form-data"
-    >
+    <form style={{ padding: "0 20px" }} onSubmit={handleSubmit}>
       <h1>Experience</h1>
       <Select
         label="Category Name"
@@ -128,14 +151,32 @@ const PostExperience = ({ handleFetch }) => {
         onChange={(e) => setFieldValue("description", e)}
       />
 
-      {/* <TextArea
-        label="Description"
-        value={values.description}
-        error={errors.description}
-        name="description"
-        onChange={handleChange}
-        placeholder="Add album description"
+      <br />
+
+      <Input
+        type="file"
+        ref={fileRef}
+        // style={{ display: "none" }}
+        onChange={handleFileChange}
+      />
+
+      {/* <Button
+        type="button"
+        size="large"
+        title="Upload Image"
+        onClick={() => {
+          console.log("hello");
+          fileRef.current.click();
+        }}
       /> */}
+
+      <br />
+
+      <div>
+        {values.files.map((file) => (
+          <img src={file} alt="image" width={50} height={50} />
+        ))}
+      </div>
 
       <Button
         hasBackground
@@ -147,4 +188,4 @@ const PostExperience = ({ handleFetch }) => {
   );
 };
 
-export default PostExperience;
+export default HOCLoading(PostExperience);

@@ -8,6 +8,7 @@ const Input = (props) => {
         value={props?.value}
         placeholder={props?.placeholder}
         onChange={props?.onChange}
+        ref={props.ref}
         {...props}
       />
       <small className="error">{props?.error ? props?.error : ""}</small>
