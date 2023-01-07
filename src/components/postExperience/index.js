@@ -88,7 +88,7 @@ const PostExperience = ({ handleFetch, images, setImages }) => {
       .min(5, "*too short")
       .required("*description is required"),
     category: yup.string().required("*category is required"),
-    place: yup.string().required("*category is required"),
+    place: yup.string().required("*place is required"),
   });
 
   const formik = useFormik({
