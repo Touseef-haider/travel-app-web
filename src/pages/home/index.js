@@ -44,6 +44,11 @@ const Home = () => {
             <Button
               onClick={() => navigate("/login")}
               style={{ borderRadius: "20px", padding: "0 25px" }}
+              title="Places Near Me"
+            />
+            <Button
+              onClick={() => navigate("/login")}
+              style={{ borderRadius: "20px", padding: "0 25px" }}
               title="login"
             />
           </div>
