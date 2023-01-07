@@ -86,9 +86,11 @@ const ExperienceSection = ({
                     src={Delete}
                     alt="delete"
                   />
-                  <span style={{ float: "right", marginRight: "60px" }}>
-                    {cat?.profile?.first_name}
-                  </span>
+                  <p style={{ float: "right", marginRight: "60px" }}>
+                    <span className="bold">{cat?.profile?.first_name} </span>
+                    posted at
+                    <span className="bold"> {cat?.place}</span>
+                  </p>
                 </>
               ) : (
                 <span style={{ float: "right", marginRight: "0px" }}>

@@ -184,7 +184,7 @@ const Home = () => {
                       {d?.profile?.fast_name} {d?.profile?.last_name}
                     </span>
                     <span>posted at </span>
-                    <span className="bold">Murree Islambad</span>
+                    <span className="bold">{d?.place}</span>
                   </div>
                 </div>
                 <br />

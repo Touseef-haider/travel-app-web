@@ -13,10 +13,12 @@ import Select from "../select";
 import Button from "../button";
 import { categories } from "../../pages/experience/index";
 import Quill from "../quill";
+import Input from "../Input";
 
 const initialState = {
   description: "",
   category: "",
+  place: "",
 };
 
 const PostExperience = ({ handleFetch, images, setImages }) => {
@@ -86,6 +88,7 @@ const PostExperience = ({ handleFetch, images, setImages }) => {
       .min(5, "*too short")
       .required("*description is required"),
     category: yup.string().required("*category is required"),
+    place: yup.string().required("*category is required"),
   });
 
   const formik = useFormik({
@@ -121,8 +124,6 @@ const PostExperience = ({ handleFetch, images, setImages }) => {
     }
   }, []);
 
-  console.log("file***********", images);
-
   const { values, errors, handleChange, setFieldValue, handleSubmit } = formik;
 
   const handleFileChange = (e) => {
@@ -151,6 +152,15 @@ const PostExperience = ({ handleFetch, images, setImages }) => {
         name="category"
         onChange={handleChange}
         placeholder="Add album category name"
+      />
+
+      <Input
+        label="Add place"
+        placeholder="place"
+        value={values.place}
+        error={errors.place}
+        onChange={handleChange}
+        name="place"
       />
 
       <Quill
