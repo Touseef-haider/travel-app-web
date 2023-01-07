@@ -36,6 +36,21 @@ export const ExperienceSection = styled.div`
     left: 40px;
     bottom: 0;
   }
+  .avatar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .profile-photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: grey;
+  }
 
   .edit {
     position: absolute;

@@ -269,8 +269,8 @@ const Home = () => {
         <div className="contact">
           <h3>Quick Contact</h3>
           <ul>
-            <li>+92 3312924590</li>
-            <li>touseefhaider355@gmail.com</li>
+            <li>+92 123197392183</li>
+            <li>jawad@gmail.com</li>
             <li>XYX Road,XYX Complex</li>
           </ul>
         </div>

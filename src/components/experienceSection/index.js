@@ -86,17 +86,23 @@ const ExperienceSection = ({
                     src={Delete}
                     alt="delete"
                   />
-                  <p style={{ float: "right", marginRight: "60px" }}>
-                    <span className="bold">{cat?.profile?.first_name} </span>
-                    posted at
-                    <span className="bold"> {cat?.place}</span>
-                  </p>
                 </>
               ) : (
                 <span style={{ float: "right", marginRight: "0px" }}>
                   {cat?.profile?.first_name} created album
                 </span>
               )}
+              <div className="avatar">
+                <div className="profile-photo">
+                  {String(cat?.profile?.first_name).charAt(0).toUpperCase()}{" "}
+                  {String(cat?.profile?.last_name).charAt(0).toUpperCase()}
+                </div>
+                <p>
+                  <span className="bold">{cat?.profile?.first_name} </span>
+                  posted at
+                  <span className="bold"> {cat?.place}</span>
+                </p>
+              </div>
               <label htmlFor="p" className="label">
                 description:
               </label>
