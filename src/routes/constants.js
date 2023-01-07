@@ -7,6 +7,7 @@ const Home = lazy(() => import("../pages/home"));
 const ForgotPassword = lazy(() => import("../pages/forgotPassword"));
 const Register = lazy(() => import("../pages/register"));
 const Experience = lazy(() => import("../pages/experience"));
+const PlacesNearMe = lazy(() => import("../pages/placesNearMe"));
 const Account = lazy(() => import("../pages/account"));
 
 export const ROUTES = [
@@ -44,6 +45,14 @@ export const ROUTES = [
     exact: true,
     path: "/experience",
     title: "Share",
+    route: Auth,
+  },
+
+  {
+    component: PlacesNearMe,
+    exact: true,
+    path: "/places-near-me",
+    title: "Places near me",
     route: Auth,
   },
 

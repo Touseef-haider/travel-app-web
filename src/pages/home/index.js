@@ -24,7 +24,6 @@ const Home = () => {
   const { data } = useQuery("alerts", () => apiService.getExperiences());
 
   const alerts = data?.filter((d) => d?.category === "alert");
-  console.log(alerts);
 
   return (
     <S.Home>
@@ -36,11 +35,18 @@ const Home = () => {
             height={100}
             src={Logo}
           />
-          <Button
-            onClick={() => navigate("/login")}
-            style={{ borderRadius: "20px", padding: "0 25px" }}
-            title="login"
-          />
+          <div>
+            <Button
+              onClick={() => navigate("/login")}
+              style={{ borderRadius: "20px", padding: "0 25px" }}
+              title="Experience"
+            />
+            <Button
+              onClick={() => navigate("/login")}
+              style={{ borderRadius: "20px", padding: "0 25px" }}
+              title="login"
+            />
+          </div>
         </header>
         <h1 className="secondary text-center pt-150">
           Travel across the globe
@@ -151,30 +157,37 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <h1 className="text-center">Alerts</h1>
+      {alerts?.filter((a) => a?.is_active)?.slice(0, 3)?.length > 3 ? (
+        <h1 className="text-center">Alerts</h1>
+      ) : (
+        ""
+      )}
       <section className="alerts">
         {Array.isArray(alerts) &&
-          alerts?.slice(0, 3).map((d) => (
-            <div className="alert">
-              <div className="alert-card">
-                <div className="profile-photo">
-                  {String(d?.profile?.first_name).charAt(0).toUpperCase()}{" "}
-                  {String(d?.profile?.last_name).charAt(0).toUpperCase()}
+          alerts
+            ?.filter((a) => a?.is_active)
+            ?.slice(0, 3)
+            .map((d) => (
+              <div className="alert">
+                <div className="alert-card">
+                  <div className="profile-photo">
+                    {String(d?.profile?.first_name).charAt(0).toUpperCase()}{" "}
+                    {String(d?.profile?.last_name).charAt(0).toUpperCase()}
+                  </div>
+                  <div className="details">
+                    <span className="bold">
+                      {d?.profile?.fast_name} {d?.profile?.last_name}
+                    </span>
+                    <span>posted at </span>
+                    <span className="bold">Murree Islambad</span>
+                  </div>
                 </div>
-                <div className="details">
-                  <span className="bold">
-                    {d?.profile?.fast_name} {d?.profile?.last_name}
-                  </span>
-                  <span>posted at </span>
-                  <span className="bold">Murree Islambad</span>
-                </div>
+                <br />
+                <p dangerouslySetInnerHTML={{ __html: d?.description }}></p>
               </div>
-              <br />
-              <p dangerouslySetInnerHTML={{ __html: d?.description }}></p>
-            </div>
-          ))}
+            ))}
       </section>
-      {Array.isArray(alerts) && alerts.length > 3 && (
+      {Array.isArray(alerts) && alerts.length > 3 ? (
         <center>
           <Button
             style={{ marginBottom: "`10px" }}
@@ -182,6 +195,8 @@ const Home = () => {
             onClick={() => navigate("/login")}
           />
         </center>
+      ) : (
+        ""
       )}
       <section className="reviews">
         <h1 className="text-center">User Reviews</h1>
