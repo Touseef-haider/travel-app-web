@@ -46,7 +46,7 @@ const Home = () => {
           Travel across the globe
         </h1>
         <div
-          className="d-flex j-center"
+          className="d-flex j-center search-input"
           style={{
             width: "50%",
             textAlign: "center",
@@ -130,7 +130,10 @@ const Home = () => {
       </section>
       <section className="top-dest">
         <div className="user-banner">
-          <div className="d-flex j-space-around" style={{ padding: "0 200px" }}>
+          <div
+            className="d-flex j-space-around text-banner"
+            style={{ padding: "0 200px" }}
+          >
             <div className="text-center secondary">
               <h1 style={{ marginBottom: "10px" }}>
                 Get 30% on top destinations
@@ -148,9 +151,10 @@ const Home = () => {
           </div>
         </div>
       </section>
+      <h1 className="text-center">Alerts</h1>
       <section className="alerts">
         {Array.isArray(alerts) &&
-          alerts.map((d) => (
+          alerts?.slice(0, 3).map((d) => (
             <div className="alert">
               <div className="alert-card">
                 <div className="profile-photo">
@@ -170,9 +174,18 @@ const Home = () => {
             </div>
           ))}
       </section>
+      {Array.isArray(alerts) && alerts.length > 3 && (
+        <center>
+          <Button
+            style={{ marginBottom: "`10px" }}
+            title="View more"
+            onClick={() => navigate("/login")}
+          />
+        </center>
+      )}
       <section className="reviews">
         <h1 className="text-center">User Reviews</h1>
-        <div className="d-flex j-center" style={{ gap: "30px", width: "100%" }}>
+        <div className="d-flex j-center reviews-card" style={{ gap: "30px" }}>
           <div className="user text-center">
             <img />
             <p>

@@ -150,7 +150,7 @@ export const Home = styled.div`
 
   .reviews {
     height: 70vh;
-    padding: 0 40px 70px 0;
+    padding: 0 40px;
   }
   .reviews h1 {
     padding: 50px 0;
@@ -194,6 +194,7 @@ export const Home = styled.div`
     color: #fff;
     display: flex;
     justify-content: center;
+    bottom: 0;
     gap: 70px;
   }
   footer .logo img {
@@ -207,5 +208,48 @@ export const Home = styled.div`
   }
   footer ul li a {
     cursor: pointer;
+  }
+  @media (max-width: ${({ theme }) => theme.breakPoints.small}) {
+    .cards {
+      flex-direction: column;
+      padding: 20px;
+    }
+    .card {
+      width: 100%;
+    }
+    .gallery {
+      flex-direction: column;
+    }
+    .search-input {
+      width: 90% !important;
+    }
+    .alerts {
+      grid-template-columns: 1fr !important;
+    }
+    .text-banner {
+      padding: 0 !important;
+    }
+    .reviews {
+      padding: 0 20px !important ;
+      height: auto !important;
+      margin-bottom: 50px;
+    }
+    .reviews-card {
+      flex-direction: column !important;
+      gap: 50px;
+    }
+    footer {
+      flex-direction: column !important;
+      align-items: center !important;
+      text-align: center;
+      padding: 0 !important;
+      gap: 10px !important;
+    }
+    footer .logo img {
+      margin: 0 !important;
+    }
+    footer .logo p {
+      text-align: center;
+    }
   }
 `;

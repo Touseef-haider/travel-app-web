@@ -129,9 +129,11 @@ const Alerts = ({ alerts, profile, refetch }) => {
                 )}
 
                 <label htmlFor="h1" className="label">
-                  title:
+                  description:
                 </label>
-                <p>{alert?.description}</p>
+                <div
+                  dangerouslySetInnerHTML={{ __html: alert?.description }}
+                ></div>
                 {alert?.comments?.map((c) => (
                   <div className="comment">
                     <span>{c?.by?.first_name}</span>
