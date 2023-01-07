@@ -103,9 +103,7 @@ const ExperienceSection = ({
               <div dangerouslySetInnerHTML={{ __html: cat?.description }}></div>
               <div className="gallery">
                 {Array.isArray(cat?.images) && cat?.images.length > 0
-                  ? cat?.images?.map((img) => (
-                      <img width={100} height={100} src={img} alt="img" />
-                    ))
+                  ? cat?.images?.map((img) => <img src={img} alt="img" />)
                   : ""}
               </div>
 
