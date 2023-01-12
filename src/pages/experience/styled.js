@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 export const Experience = styled.div`
   margin-top: 30px;
-  width: 100%;
   display: grid;
   grid-template-columns: 2fr 1fr;
+  grid-auto-flow: column;
   grid-gap: 20px;
 
   h1 {
@@ -41,6 +41,9 @@ export const Experience = styled.div`
     object-fit: cover;
   }
   @media (max-width: ${({ theme }) => theme.breakPoints.small}) {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
+  }
+  @media (max-width: ${({ theme }) => theme.breakPoints.medium}) {
+    grid-template-columns: 1fr !important;
   }
 `;

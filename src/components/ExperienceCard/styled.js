@@ -22,7 +22,7 @@ export const ExperienceCard = styled.div`
   }
   .card img {
     width: 100%;
-    padding: 0;
+    padding: 0 !important;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     height: 200px;

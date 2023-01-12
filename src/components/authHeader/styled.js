@@ -21,6 +21,10 @@ export const AuthHeader = styled.div`
   li {
     padding: 0 30px;
   }
+  li a.active {
+    text-decoration: underline;
+    color: ${({ theme }) => theme.colors.primary};
+  }
   a {
     color: ${({ theme }) => theme.colors.grey};
     text-decoration: none;

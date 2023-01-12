@@ -12,6 +12,7 @@ const colors = {
 
 const breakPoints = {
   small: "540px",
+  medium: "740px",
 };
 
 export default {

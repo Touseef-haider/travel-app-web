@@ -17,7 +17,6 @@ const HeaderCourosel = ({ data }) => {
           data={data}
           time={2000}
           width="100%"
-          height="500px"
           captionStyle={captionStyle}
           radius="10px"
           slideNumber={false}
@@ -33,9 +32,7 @@ const HeaderCourosel = ({ data }) => {
           thumbnailWidth="100px"
           style={{
             textAlign: "center",
-            maxWidth: "850px",
-            maxHeight: "500px",
-            margin: "40px auto",
+            margin: "20px auto",
           }}
         />
       </div>

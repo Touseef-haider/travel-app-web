@@ -189,6 +189,14 @@ const reset = css`
     justify-content: space-around;
   }
 
+  .align-items-center {
+    align-items: center;
+  }
+
+  .gap-5 {
+    gap: 5px;
+  }
+
   .j-end {
     justify-content: flex-end;
   }

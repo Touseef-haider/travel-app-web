@@ -33,11 +33,14 @@ const ExperienceSection = ({
   };
 
   const handleLike = (e, expId, isLiked) => {
+    console.log(isLiked);
     likeMutation.mutate({
       _id: expId,
-      is_liked: isLiked ?? true,
+      is_liked: isLiked === false ? true : false,
     });
   };
+
+  console.log(data?.filter((i) => i?.category === filterBy));
   return (
     <S.ExperienceSection>
       {Array.isArray(data) &&

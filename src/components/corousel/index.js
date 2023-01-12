@@ -25,7 +25,7 @@ export default function Corousel({ images, deviceType }) {
         customTransition="all 1s"
         transitionDuration={1000}
         deviceType={deviceType}
-        centerMode
+        centerMode={false}
         rewind={true}
         rewindWithAnimation={true}
       >
