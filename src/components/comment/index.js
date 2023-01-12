@@ -40,7 +40,6 @@ const Comment = ({ data, refetch }) => {
     (data) => apiService.updateLikeInExperience(data),
     {
       onSuccess: (data) => {
-        console.log("tis i si ", data);
         refetch();
       },
     }
@@ -65,6 +64,8 @@ const Comment = ({ data, refetch }) => {
         refetch();
         setId("");
         setOpen(false);
+        setCommentId("");
+        setInitialState({ ...initialSchema, comment: "" });
       },
     }
   );

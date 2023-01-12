@@ -41,7 +41,7 @@ export default function MapComponent() {
   ];
 
   return (
-    <div style={{ height: "50vh", width: "80%", margin: "0 auto" }}>
+    <div style={{ height: "60vh", width: "100%", margin: "0 auto" }}>
       <GoogleMapReact
         bootstrapURLKeys={{ key: "AIzaSyBaWxdVR5OET04_8EMe15pWyA8nYbSYrCU" }}
         defaultCenter={defaultProps.center}

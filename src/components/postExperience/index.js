@@ -131,7 +131,9 @@ const PostExperience = ({ handleFetch, images, setImages }) => {
       const file = e.target.files[0];
       const formData = new FormData();
       formData.append("file", file);
-      imageMutation(formData);
+      if (file) {
+        imageMutation(formData);
+      }
       e.target.value = "";
     }
   };
