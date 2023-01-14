@@ -14,7 +14,7 @@ const HeaderCourosel = ({ data }) => {
     <S.Wrapper>
       <div>
         <Carousel
-          data={data}
+          data={data || []}
           time={2000}
           width="100%"
           captionStyle={captionStyle}

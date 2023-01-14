@@ -9,10 +9,20 @@ const ExperienceCard = ({ data }) => {
     <S.ExperienceCard>
       <div className="experience-section">
         {data?.map((d) => (
-          <div className="card" onClick={() => navigate("/single-place")}>
-            <img src={d?.image} alt="file" />
+          <div
+            className="card"
+            onClick={() => navigate(`/single-place/${d?._id}`)}
+          >
+            <img
+              src={
+                d?.images.length > 0
+                  ? d?.images[0]
+                  : "https://traveling-images.s3.ap-northeast-1.amazonaws.com/1673027721397-1.jpg"
+              }
+              alt="file"
+            />
             <h4>{d?.category}</h4>
-            <small>{d?.description}</small>
+            <small dangerouslySetInnerHTML={{ __html: d?.description }}></small>
             <div className="detail">
               <p>0 stories</p>
               <p>0 Questions</p>

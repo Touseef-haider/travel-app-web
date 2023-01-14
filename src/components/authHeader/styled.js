@@ -28,6 +28,7 @@ export const AuthHeader = styled.div`
   a {
     color: ${({ theme }) => theme.colors.grey};
     text-decoration: none;
+    background-color: #fff !important;
   }
   a:hover {
     color: ${({ theme }) => theme.colors.primary};

@@ -72,11 +72,12 @@ class ApiService extends BaseService {
   }
 
   getParticularExperience(id) {
+    console.log("thsi sis is s isis", id);
     return this.get(`/experience/${id}`);
   }
 
-  addFile(file){
-    return this.post('/upload',file)
+  addFile(file) {
+    return this.post("/upload", file);
   }
 }
 

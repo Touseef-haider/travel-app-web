@@ -60,7 +60,7 @@ export const ROUTES = [
   {
     component: SinglePlace,
     exact: true,
-    path: "/single-place",
+    path: "/single-place/:id",
     title: "Single Place",
     route: Auth,
   },

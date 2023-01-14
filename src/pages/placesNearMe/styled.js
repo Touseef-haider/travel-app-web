@@ -4,8 +4,8 @@ export const PlacesNearMe = styled.div`
   .filter {
     width: 50%;
     margin-top: 20px;
-    display: flex;
-    gap: 20px;
+    display: grid;
+    grid-template-columns: 150px;
     padding: 0 50px;
   }
 

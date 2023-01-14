@@ -6,6 +6,10 @@ import Select from "../../components/select";
 import AuthLayout from "../../layouts/authLayout";
 import * as S from "./styled";
 
+import { useQuery } from "react-query";
+import apiService from "../../services/apiService";
+import { useState } from "react";
+
 export const images = [
   {
     image:
@@ -42,6 +46,12 @@ export const images = [
   },
 ];
 const PlacesNearMe = () => {
+  const [data, setData] = useState([]);
+  const { refetch } = useQuery("alerts", () => apiService.getExperiences(), {
+    onSuccess: (data) => {
+      setData(data);
+    },
+  });
   return (
     <AuthLayout>
       <S.PlacesNearMe>
@@ -50,17 +60,22 @@ const PlacesNearMe = () => {
         <div className="filter">
           <h3>Filter</h3>
           <Select
-            placeholder="All Provices"
-            options={[{ item: "A", value: "A" }]}
-          />
-          <Select
             placeholder="All Cities"
-            options={[{ item: "A", value: "A" }]}
+            onChange={(e) => {
+              if (e.target.value === "all") {
+                refetch();
+              }
+              setData(data.filter((d) => d?.place === e.target.value));
+            }}
+            options={[
+              { item: "all", value: "all" },
+              { item: "karachi", value: "karachi" },
+              { item: "islambad", value: "islamabad" },
+            ]}
           />
-          <Select options={[{ item: "A", value: "A" }]} />
         </div>
 
-        <ExperienceCard data={images} />
+        <ExperienceCard data={data?.filter((i) => i?.category !== "alert")} />
       </S.PlacesNearMe>
     </AuthLayout>
   );
