@@ -26,13 +26,10 @@ const SinglePlace = () => {
 
   useEffect(() => {
     const id = location.pathname.split("/")[2];
-    console.log("-----", id);
     if (id) {
       setId(id);
     }
   }, []);
-
-  console.log(data);
 
   return (
     <AuthLayout>

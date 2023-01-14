@@ -1,44 +1,31 @@
 import React from "react";
 import Pointer from "../../assets/point.png";
 import GoogleMapReact from "google-map-react";
+import { useQuery } from "react-query";
+import apiService from "../../services/apiService";
+import theme from "../../globalStyles/theme";
 
 const AnyReactComponent = ({ text }) => (
-  <div>
+  <div
+    style={{
+      textAlign: "center",
+      boxShadow: "rgb(0 0 0 / 16%) 0px 0px 3px 0px",
+    }}
+  >
     <img src={Pointer} height={50} width={50} alt="pointer" />
+    <p style={{ color: theme.colors.primary, fontSize: "large" }}>{text}</p>
   </div>
 );
 
 export default function MapComponent() {
+  const { data } = useQuery("getMap", () => apiService.getMapsLocations());
   const defaultProps = {
     center: {
-      lat: 10.99835602,
-      lng: 77.01502627,
-    },
-    zoom: 20,
-  };
-
-  const mosques = [
-    {
       lat: 30.404955,
       lng: 70.736504,
     },
-    {
-      lat: 32.959686,
-      lng: 73.689919,
-    },
-    {
-      lat: 26.05702,
-      lng: 68.846275,
-    },
-    {
-      lat: 24.907162,
-      lng: 67.058723,
-    },
-    {
-      lat: 30.894875,
-      lng: 72.652359,
-    },
-  ];
+    zoom: 20,
+  };
 
   return (
     <div style={{ height: "60vh", width: "100%", margin: "0 auto" }}>
@@ -47,9 +34,11 @@ export default function MapComponent() {
         defaultCenter={defaultProps.center}
         defaultZoom={defaultProps.zoom}
       >
-        {mosques.map(({ lat, lng }) => (
-          <AnyReactComponent lat={lat} lng={lng} text="My Marker" />
-        ))}
+        {Array.isArray(data) &&
+          data?.length > 0 &&
+          data?.map(({ lat, lng, name }) => (
+            <AnyReactComponent lat={lat} lng={lng} text={name} />
+          ))}
       </GoogleMapReact>
     </div>
   );

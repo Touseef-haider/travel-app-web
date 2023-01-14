@@ -79,6 +79,10 @@ class ApiService extends BaseService {
   addFile(file) {
     return this.post("/upload", file);
   }
+
+  getMapsLocations() {
+    return this.get("/mapLocation");
+  }
 }
 
 export default new ApiService();
