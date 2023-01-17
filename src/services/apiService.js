@@ -72,7 +72,6 @@ class ApiService extends BaseService {
   }
 
   getParticularExperience(id) {
-    console.log("thsi sis is s isis", id);
     return this.get(`/experience/${id}`);
   }
 
@@ -82,6 +81,18 @@ class ApiService extends BaseService {
 
   getMapsLocations() {
     return this.get("/mapLocation");
+  }
+
+  getParticularPlace(id) {
+    return this.get(`/mapLocation/${id}`);
+  }
+
+  getProvinces() {
+    return this.get("/province");
+  }
+
+  getCategories() {
+    return this.get("/category");
   }
 }
 

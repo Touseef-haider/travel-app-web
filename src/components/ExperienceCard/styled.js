@@ -38,10 +38,9 @@ export const ExperienceCard = styled.div`
   }
 
   .symbol {
-    margin: 10px;
-
-    width: 20px;
-    height: 20px;
+    margin: 10px 0px;
+    width: 40px;
+    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;

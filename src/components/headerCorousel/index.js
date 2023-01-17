@@ -10,6 +10,7 @@ const slideNumberStyle = {
   fontWeight: "bold",
 };
 const HeaderCourosel = ({ data }) => {
+  console.log(data);
   return (
     <S.Wrapper>
       <div>

@@ -21,15 +21,13 @@ const ExperienceCard = ({ data }) => {
               }
               alt="file"
             />
-            <h4>{d?.category}</h4>
+            <h4>{d?.category?.name}</h4>
             <small dangerouslySetInnerHTML={{ __html: d?.description }}></small>
-            <div className="detail">
-              <p>0 stories</p>
-              <p>0 Questions</p>
-              <p>1 Experience</p>
-            </div>
-            <div className="symbol">
-              <img src={Pointer} alt="sym" />
+            <div className="d-flex" style={{ gap: "10px" }}>
+              <div className="symbol">
+                <img src={Pointer} alt="sym" />
+              </div>
+              <p style={{ alignSelf: "center" }}>{d?.location}</p>
             </div>
           </div>
         ))}

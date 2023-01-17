@@ -10,7 +10,7 @@ const responsive = {
   },
 };
 
-export default function Corousel({ images, deviceType }) {
+export default function Corousel({ data, deviceType }) {
   return (
     <S.Corousel>
       <Carousel
@@ -29,16 +29,14 @@ export default function Corousel({ images, deviceType }) {
         rewind={true}
         rewindWithAnimation={true}
       >
-        {images.map((im) => (
+        {data?.map((im) => (
           <>
-            <img
-              style={{ borderRadius: "50%" }}
-              src={im.image}
-              alt="img"
-              width={100}
-              height={100}
-            />
-            <h5 style={{ marginLeft: "20px" }}>{im.title}</h5>
+            <div
+              style={{ borderRadius: "50%", width: "100px", height: "100px" }}
+            >
+              {String(im?.name).charAt(0).toUpperCase()}
+            </div>
+            <h5 style={{ marginLeft: "20px" }}>{im?.name}</h5>
           </>
         ))}
       </Carousel>

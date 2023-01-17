@@ -1,12 +1,18 @@
 import styled from "styled-components";
 
 export const PlacesNearMe = styled.div`
+  h3 {
+    padding: 0 50px;
+  }
   .filter {
-    width: 50%;
     margin-top: 20px;
     display: grid;
-    grid-template-columns: 150px;
+    gap: 10px;
+    grid-template-columns: repeat(3, 150px);
     padding: 0 50px;
+  }
+  .filter > button {
+    height: 30px;
   }
 
   @media (max-width: ${({ theme }) => theme.breakPoints.small}) {

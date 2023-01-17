@@ -17,8 +17,7 @@ const AnyReactComponent = ({ text }) => (
   </div>
 );
 
-export default function MapComponent() {
-  const { data } = useQuery("getMap", () => apiService.getMapsLocations());
+export default function MapComponent({ data }) {
   const defaultProps = {
     center: {
       lat: 30.404955,

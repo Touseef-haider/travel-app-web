@@ -9,73 +9,84 @@ import * as S from "./styled";
 import { useQuery } from "react-query";
 import apiService from "../../services/apiService";
 import { useState } from "react";
+import Button from "../../components/button";
 
-export const images = [
-  {
-    image:
-      "https://traveling-images.s3.ap-northeast-1.amazonaws.com/1673027721397-1.jpg",
-    title: "All Places",
-
-    category: "Water fall",
-    description: "This is category",
-  },
-  {
-    image:
-      "https://traveling-images.s3.ap-northeast-1.amazonaws.com/1673092097809-Screenshot+(4).png",
-    title: "Place A",
-
-    category: "Water fall",
-    description: "This is category",
-  },
-  {
-    image:
-      "https://traveling-images.s3.ap-northeast-1.amazonaws.com/1673092166457-54.jpg",
-    title: "Place B",
-
-    category: "Water fall",
-    description: "This is category",
-  },
-
-  {
-    image:
-      "https://traveling-images.s3.ap-northeast-1.amazonaws.com/1673100245800-1.jpg",
-    title: "Place D",
-
-    category: "Water fall",
-    description: "This is category",
-  },
-];
 const PlacesNearMe = () => {
+  const [province, setProvince] = useState("");
+  const [city, setCity] = useState("");
   const [data, setData] = useState([]);
-  const { refetch } = useQuery("alerts", () => apiService.getExperiences(), {
-    onSuccess: (data) => {
-      setData(data);
-    },
-  });
+  const { refetch } = useQuery(
+    "getPlaces",
+    () => apiService.getMapsLocations(),
+    {
+      onSuccess: (data) => {
+        setData(data);
+      },
+    }
+  );
+  // const { data: categories } = useQuery("getCat", () =>
+  //   apiService.getCategories()
+  // );
+  const { data: provinces } = useQuery("getProvinces", () =>
+    apiService.getProvinces()
+  );
+
+  // console.log(categories);
+
   return (
     <AuthLayout>
       <S.PlacesNearMe>
-        <MapComponent />
-        <Corousel deviceType="mobile" images={images} />
+        <MapComponent data={data} />
+        {/* <Corousel deviceType="mobile" data={categories} /> */}
+        <h3>Filter</h3>
         <div className="filter">
-          <h3>Filter</h3>
           <Select
-            placeholder="All Cities"
+            placeholder="All Provinces"
             onChange={(e) => {
-              if (e.target.value === "all") {
-                refetch();
-              }
-              setData(data.filter((d) => d?.place === e.target.value));
+              setProvince(e.target.value);
             }}
-            options={[
-              { item: "all", value: "all" },
-              { item: "karachi", value: "karachi" },
-              { item: "islambad", value: "islamabad" },
-            ]}
+            value={province}
+            selectOption="select province"
+            options={provinces?.map((p) => ({ value: p?._id, item: p?.name }))}
           />
+          {province && (
+            <Select
+              placeholder="All Cities"
+              onChange={(e) => {
+                setCity(e.target.value);
+                const pr = provinces?.find((p) => p?._id === province);
+                const c = pr?.cities?.find((c) => c?._id === e.target.value);
+                setData(
+                  data?.filter(
+                    (d) =>
+                      d?.country?.province?._id === province &&
+                      d?.country?.city === c?.name
+                  )
+                );
+              }}
+              value={city}
+              selectOption="select city"
+              options={provinces
+                ?.find((p) => p?._id === province)
+                ?.cities.map((c) => ({
+                  value: c?._id,
+                  item: c?.name,
+                }))}
+            />
+          )}
+          {(province || city) && (
+            <Button
+              title="clear filter"
+              onClick={() => {
+                setProvince("");
+                setCity("");
+                refetch();
+              }}
+            />
+          )}
         </div>
 
-        <ExperienceCard data={data?.filter((i) => i?.category !== "alert")} />
+        <ExperienceCard data={data} />
       </S.PlacesNearMe>
     </AuthLayout>
   );
