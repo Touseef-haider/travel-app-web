@@ -24,20 +24,29 @@ const PlacesNearMe = () => {
       },
     }
   );
-  // const { data: categories } = useQuery("getCat", () =>
-  //   apiService.getCategories()
-  // );
+  const { data: categories } = useQuery("getCat", () =>
+    apiService.getCategories()
+  );
   const { data: provinces } = useQuery("getProvinces", () =>
     apiService.getProvinces()
   );
 
-  // console.log(categories);
+  console.log(categories);
 
   return (
     <AuthLayout>
       <S.PlacesNearMe>
-        <MapComponent data={data} />
-        {/* <Corousel deviceType="mobile" data={categories} /> */}
+        <MapComponent
+          data={Array.isArray(data) && data?.length > 0 ? data : []}
+        />
+        <Corousel
+          deviceType="mobile"
+          data={
+            Array.isArray(categories) && categories?.length > 0
+              ? categories
+              : []
+          }
+        />
         <h3>Filter</h3>
         <div className="filter">
           <Select

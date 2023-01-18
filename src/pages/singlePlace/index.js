@@ -36,7 +36,7 @@ const SinglePlace = () => {
           <HeaderCourosel
             data={
               Array.isArray(data?.images) && data?.images?.length > 0
-                ? data?.images
+                ? data?.images?.map((i) => ({ image: i }))
                 : []
             }
           />

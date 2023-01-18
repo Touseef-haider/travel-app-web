@@ -32,11 +32,19 @@ export default function Corousel({ data, deviceType }) {
         {data?.map((im) => (
           <>
             <div
-              style={{ borderRadius: "50%", width: "100px", height: "100px" }}
+              style={{
+                borderRadius: "50%",
+                width: "50px",
+                height: "50px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                border: "1px solid",
+              }}
             >
               {String(im?.name).charAt(0).toUpperCase()}
             </div>
-            <h5 style={{ marginLeft: "20px" }}>{im?.name}</h5>
+            <h5 style={{ marginLeft: "10px" }}>{im?.name}</h5>
           </>
         ))}
       </Carousel>
