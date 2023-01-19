@@ -42,7 +42,7 @@ export default function Corousel({ data, deviceType }) {
                 border: "1px solid",
               }}
             >
-              {String(im?.name).charAt(0).toUpperCase()}
+              <img style={{ width: "70%", height: "70%" }} src={im?.image} />
             </div>
             <h5 style={{ marginLeft: "10px" }}>{im?.name}</h5>
           </>
