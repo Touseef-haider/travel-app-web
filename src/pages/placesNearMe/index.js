@@ -10,11 +10,48 @@ import { useQuery } from "react-query";
 import apiService from "../../services/apiService";
 import { useState } from "react";
 import Button from "../../components/button";
+import { useEffect } from "react";
 
 const PlacesNearMe = () => {
   const [province, setProvince] = useState("");
   const [city, setCity] = useState("");
   const [data, setData] = useState([]);
+  const [defaultValue, setDefaultValue] = useState({
+    center: {
+      lat: null,
+      lng: null,
+    },
+    bounds: {
+      lat: null,
+      lng: null,
+    },
+    zoom: 20,
+  });
+  console.log(defaultValue);
+  useEffect(() => {
+    navigator.permissions
+      .query({
+        name: "geolocation",
+      })
+      .then((result) => {
+        console.log(result);
+        if (result.state === "granted") {
+          navigator.geolocation.getCurrentPosition((pos) => {
+            console.log("po", pos);
+            setDefaultValue({
+              center: {
+                lat: pos?.coords.latitude,
+                lng: pos.coords.longitude,
+              },
+              bounds: {
+                lat: pos?.coords.latitude,
+                lng: pos.coords.longitude,
+              },
+            });
+          });
+        }
+      });
+  }, []);
   const { refetch } = useQuery(
     "getPlaces",
     () => apiService.getMapsLocations(),
@@ -31,14 +68,15 @@ const PlacesNearMe = () => {
     apiService.getProvinces()
   );
 
-  console.log(categories);
-
   return (
     <AuthLayout>
       <S.PlacesNearMe>
-        <MapComponent
-          data={Array.isArray(data) && data?.length > 0 ? data : []}
-        />
+        {(defaultValue?.center?.lat || defaultValue?.center?.lng) && (
+          <MapComponent
+            defaultValue={defaultValue}
+            data={Array.isArray(data) && data?.length > 0 ? data : []}
+          />
+        )}
         <Corousel
           deviceType="mobile"
           data={
