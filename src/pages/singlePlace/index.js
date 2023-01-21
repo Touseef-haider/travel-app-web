@@ -27,7 +27,6 @@ const SinglePlace = () => {
     }
   }, []);
 
-  console.log(data);
   return (
     <AuthLayout>
       <S.SinglePlace>
@@ -47,11 +46,23 @@ const SinglePlace = () => {
             <small>{data?.category?.name}</small>
             <p dangerouslySetInnerHTML={{ __html: data?.description }}></p>
           </div>
-          <div className="availability">
-            <h5>Accessible Via</h5>
-            {data?.accessibilities?.map((a) => (
-              <Tag title={a?.via} color="primary" />
-            ))}
+          <div>
+            <div className="availability">
+              <h5>Accessible For</h5>
+              {data?.accessibilities
+                ?.filter((i) => i?.type === "individual")
+                ?.map((a) => (
+                  <Tag title={a?.via} color="primary" />
+                ))}
+            </div>
+            <div className="availability">
+              <h5>Accessible Via</h5>
+              {data?.accessibilities
+                ?.filter((i) => i?.type === "vehicle")
+                ?.map((a) => (
+                  <Tag title={a?.via} color="primary" />
+                ))}
+            </div>
           </div>
         </div>
         <h3 className="primary mt-20">Location</h3>
@@ -81,6 +92,7 @@ const SinglePlace = () => {
               )}
               <h4>{h?.name}</h4>
               <h4>{h?.stars} Stars</h4>
+              <p dangerouslySetInnerHTML={{ __html: h?.description }}></p>
               <small>{h?.location}</small>
             </div>
           ))}
