@@ -28,29 +28,23 @@ const PlacesNearMe = () => {
     zoom: 20,
   });
   console.log(defaultValue);
-  useEffect(() => {
-    navigator.permissions
-      .query({
-        name: "geolocation",
-      })
-      .then((result) => {
-        console.log(result);
-        if (result.state === "granted") {
-          navigator.geolocation.getCurrentPosition((pos) => {
-            console.log("po", pos);
-            setDefaultValue({
-              center: {
-                lat: pos?.coords.latitude,
-                lng: pos.coords.longitude,
-              },
-              bounds: {
-                lat: pos?.coords.latitude,
-                lng: pos.coords.longitude,
-              },
-            });
-          });
-        }
+  const getLocation = () => {
+    navigator.geolocation.getCurrentPosition((pos) => {
+      console.log("po", pos);
+      setDefaultValue({
+        center: {
+          lat: pos?.coords.latitude,
+          lng: pos.coords.longitude,
+        },
+        bounds: {
+          lat: pos?.coords.latitude,
+          lng: pos.coords.longitude,
+        },
       });
+    });
+  };
+  useEffect(() => {
+    getLocation();
   }, []);
   const { refetch } = useQuery(
     "getPlaces",
@@ -71,12 +65,10 @@ const PlacesNearMe = () => {
   return (
     <AuthLayout>
       <S.PlacesNearMe>
-        {(defaultValue?.center?.lat || defaultValue?.center?.lng) && (
-          <MapComponent
-            defaultValue={defaultValue}
-            data={Array.isArray(data) && data?.length > 0 ? data : []}
-          />
-        )}
+        <MapComponent
+          defaultValue={defaultValue}
+          data={Array.isArray(data) && data?.length > 0 ? data : []}
+        />
         <Corousel
           deviceType="mobile"
           data={

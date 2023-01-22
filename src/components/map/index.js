@@ -17,26 +17,18 @@ const AnyReactComponent = ({ text }) => (
 );
 
 export default function MapComponent({ data, defaultValue }) {
+  console.log(defaultValue);
   return (
     <div style={{ height: "60vh", width: "100%", margin: "0 auto" }}>
       <GoogleMapReact
         bootstrapURLKeys={{ key: "AIzaSyBaWxdVR5OET04_8EMe15pWyA8nYbSYrCU" }}
-        defaultCenter={
-          defaultValue?.center || { lat: 24.9266176, lng: 67.0859264 }
-        }
-        zoom={
-          fitBounds(
-            {
-              ne: defaultValue?.center,
-              sw: defaultValue?.center,
-            },
-            {
-              width: 640, // Map width in pixels
-              height: 380, // Map height in pixels
-            }
-          ).zoom
-        }
-        options={{ zoomControl: { lat: 24.9266176, lng: 67.0859264 } }}
+        defaultCenter={{ lat: 24.9266176, lng: 67.0859264 }}
+        // options={{ zoomControl: { lat: 24.9266176, lng: 67.0859264 } }}
+        // defaultCenter={{
+        //   lat: 24.9266176,
+        //   lng: 67.0859264,
+        // }}
+        defaultZoom={4}
       >
         {Array.isArray(data) &&
           data?.length > 0 &&
