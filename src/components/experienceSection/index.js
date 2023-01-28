@@ -4,9 +4,12 @@ import { useNavigate } from "react-router-dom";
 import * as S from "./styled";
 import Comment from "../comment";
 import Like from "../../assets/blackLike.png";
-import theme from "../../globalStyles/theme";
 import { useMutation } from "react-query";
 import apiService from "../../services/apiService";
+import { timeAgo } from "../../utils/formatDate";
+import { useState } from "react";
+import { useRef } from "react";
+import { useEffect } from "react";
 
 const ExperienceSection = ({
   data,
@@ -15,6 +18,7 @@ const ExperienceSection = ({
   filterBy,
   refetch,
 }) => {
+  const [show, setShow] = useState(false);
   const navigate = useNavigate();
 
   const likeMutation = useMutation(
@@ -25,6 +29,19 @@ const ExperienceSection = ({
       },
     }
   );
+  const ref = useRef(null);
+  useEffect(() => {
+    const handleClick = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) {
+        setShow(false);
+      }
+    };
+
+    document.addEventListener("click", handleClick);
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  }, [ref]);
   const handleEdit = (id) => {
     navigate(`/experience?id=${id}`);
   };
@@ -49,52 +66,54 @@ const ExperienceSection = ({
           ?.map((cat) => (
             <div className="section" key={cat?.description}>
               <div
+                className="three-hor-dots"
+                ref={ref}
+                onClick={() => setShow(!show)}
+              >
+                <div className="point"></div>
+                <div className="point"></div>
+                <div className="point"></div>
+                {show && cat?.profile?._id === profile?._id && (
+                  <div className="controls">
+                    <img
+                      className="edit"
+                      onClick={() => handleEdit(cat?._id)}
+                      src={Edit}
+                      alt="edit"
+                    />
+                    <img
+                      className="delete"
+                      onClick={() => handleDelete(cat?._id)}
+                      src={Delete}
+                      alt="delete"
+                    />
+                  </div>
+                )}
+              </div>
+              <div
                 className="like"
                 style={{
-                  backgroundColor: `${
+                  backgroundColor: "white",
+                }}
+                onClick={(e) => {
+                  handleLike(
+                    e,
+                    cat?._id,
                     cat?.liked_by?.includes(profile?._id)
-                      ? theme.colors.primary
-                      : ""
-                  }`,
+                  );
                 }}
               >
-                <img
-                  onClick={(e) => {
-                    handleLike(
-                      e,
-                      cat?._id,
-                      cat?.liked_by?.includes(profile?._id)
-                    );
-                  }}
-                  src={Like}
-                  width={25}
-                  height={25}
-                  alt="like button"
-                />
+                <img src={Like} width={25} height={25} alt="like button" />
                 <span className="liked-length primary">
-                  {cat?.liked_by.length}
+                  {cat?.liked_by?.includes(profile?._id) ? "Unlike" : "Like"}
                 </span>
               </div>
-              {cat?.profile?._id === profile?._id ? (
-                <>
-                  <img
-                    className="edit"
-                    onClick={() => handleEdit(cat?._id)}
-                    src={Edit}
-                    alt="edit"
-                  />
-                  <img
-                    className="delete"
-                    onClick={() => handleDelete(cat?._id)}
-                    src={Delete}
-                    alt="delete"
-                  />
-                </>
-              ) : (
+              {cat?.profile?._id !== profile?._id && (
                 <span style={{ float: "right", marginRight: "0px" }}>
-                  {cat?.profile?.first_name} created album
+                  {cat?.profile?.first_name} created {cat?.category}
                 </span>
               )}
+
               <div className="avatar">
                 <div className="profile-photo">
                   {String(cat?.profile?.first_name).charAt(0).toUpperCase()}{" "}
@@ -104,6 +123,8 @@ const ExperienceSection = ({
                   <span className="bold">{cat?.profile?.first_name} </span>
                   posted at
                   <span className="bold"> {cat?.place}</span>
+                  <br />
+                  <span>{timeAgo(cat?.created_at)}</span>
                 </p>
               </div>
               <label htmlFor="p" className="label">
@@ -112,9 +133,7 @@ const ExperienceSection = ({
               <div dangerouslySetInnerHTML={{ __html: cat?.description }}></div>
               <div className="gallery">
                 {Array.isArray(cat?.images) && cat?.images.length > 0
-                  ? cat?.images?.map((img) => (
-                      <img width={300} src={img} alt="img" />
-                    ))
+                  ? cat?.images?.map((img) => <img src={img} alt="img" />)
                   : ""}
               </div>
 

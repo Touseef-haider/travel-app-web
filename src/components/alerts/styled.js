@@ -9,14 +9,18 @@ export const Alerts = styled.div`
   right: 0;
   top: 20px;
   .section {
-    padding: 10px;
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1) !important;
+    padding: 20px;
+    box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+
     margin: 10px;
     position: relative;
   }
   .story {
-    padding: 10px;
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1) !important;
+    padding: 20px;
+    box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+
     margin: 10px;
     position: relative;
   }
