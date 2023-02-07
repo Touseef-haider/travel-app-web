@@ -53,7 +53,15 @@ export default function Corousel({ data, deviceType, setFilter, filter }) {
                 alt="cat-image"
               />
             </div>
-            <h5 style={{ marginLeft: "10px" }}>{im?.name}</h5>
+            <h5
+              style={{
+                marginLeft: "10px",
+                fontFamily: "Open Sans, sans-serif",
+                fontFamily: "Roboto, sans-serif",
+              }}
+            >
+              {im?.name}
+            </h5>
           </>
         ))}
       </Carousel>

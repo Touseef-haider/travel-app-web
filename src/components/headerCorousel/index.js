@@ -10,7 +10,6 @@ const slideNumberStyle = {
   fontWeight: "bold",
 };
 const HeaderCourosel = ({ data }) => {
-  console.log(data);
   return (
     <S.Wrapper>
       <div>
@@ -30,7 +29,7 @@ const HeaderCourosel = ({ data }) => {
           slideBackgroundColor="darkgrey"
           slideImageFit="cover"
           thumbnails={true}
-          thumbnailWidth="100px"
+          thumbnailWidth="150px"
           style={{
             textAlign: "center",
             margin: "20px auto",

@@ -22,7 +22,7 @@ export default function MapComponent({ data }) {
       <GoogleMapReact
         bootstrapURLKeys={{ key: "AIzaSyBaWxdVR5OET04_8EMe15pWyA8nYbSYrCU" }}
         defaultCenter={{ lat: 24.9266176, lng: 67.0859264 }}
-        defaultZoom={4}
+        defaultZoom={8}
       >
         {Array.isArray(data) &&
           data?.length > 0 &&
