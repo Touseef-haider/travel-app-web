@@ -21,7 +21,10 @@ const ExperienceCard = ({ data }) => {
               }
               alt="file"
             />
-            <h4>{d?.category?.name}</h4>
+            <div>
+              <h5>{d?.name}</h5>
+              <h4>{d?.category?.name}</h4>
+            </div>
             <small dangerouslySetInnerHTML={{ __html: d?.description }}></small>
             <div className="d-flex" style={{ gap: "10px" }}>
               <div className="symbol">

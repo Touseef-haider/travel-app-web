@@ -43,7 +43,6 @@ const SinglePlace = () => {
         )}
         <div className="section">
           <div className="detail">
-            <h1 className="text-primary">{data?.category?.name}</h1>
             <small>{data?.category?.name}</small>
             <p dangerouslySetInnerHTML={{ __html: data?.description }}></p>
           </div>
