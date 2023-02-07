@@ -85,7 +85,7 @@ export const ExperienceSection = styled.div`
   }
 
   .gallery {
-    height: 300px !important;
+    /* height: 300px !important; */
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
