@@ -18,7 +18,7 @@ const ExperienceSection = ({
   filterBy,
   refetch,
 }) => {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(null);
   const navigate = useNavigate();
 
   const likeMutation = useMutation(
@@ -33,7 +33,7 @@ const ExperienceSection = ({
   useEffect(() => {
     const handleClick = (e) => {
       if (ref.current && !ref.current.contains(e.target)) {
-        setShow(false);
+        setShow(null);
       }
     };
 
@@ -57,23 +57,24 @@ const ExperienceSection = ({
     });
   };
 
-  console.log(data?.filter((i) => i?.category === filterBy));
+  console.log(show);
+
   return (
     <S.ExperienceSection>
       {Array.isArray(data) &&
         data
           ?.filter((i) => i?.category === filterBy)
-          ?.map((cat) => (
+          ?.map((cat, index) => (
             <div className="section" key={cat?.description}>
               <div
                 className="three-hor-dots"
                 ref={ref}
-                onClick={() => setShow(!show)}
+                onClick={() => setShow(index)}
               >
                 <div className="point"></div>
                 <div className="point"></div>
                 <div className="point"></div>
-                {show && cat?.profile?._id === profile?._id && (
+                {show === index && (
                   <div className="controls">
                     <img
                       className="edit"

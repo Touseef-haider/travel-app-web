@@ -69,11 +69,11 @@ const Experience = () => {
 
           <TabPanel>
             <Alerts
-              alerts={
-                Array.isArray(data) &&
-                data?.filter((i) => i?.category === "alert")
-              }
+              filterBy="alert"
+              deleteMutation={deleteMutation}
+              key="album"
               profile={profile}
+              data={data}
               refetch={refetch}
             />
           </TabPanel>

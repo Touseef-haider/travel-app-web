@@ -3,7 +3,7 @@
 import React, { useRef } from "react";
 import { useMutation, useQuery } from "react-query";
 import apiService from "../../services/apiService";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import toastify from "../toast";
 import { useState, useEffect } from "react";
 import Delete from "../../assets/delete.svg";
@@ -23,6 +23,7 @@ const initialState = {
 
 const PostExperience = ({ handleFetch, images, setImages }) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const search = new URLSearchParams(location.search);
   const fileRef = useRef(null);
   const [initialValues, setInitialValues] = useState(initialState);
@@ -65,7 +66,10 @@ const PostExperience = ({ handleFetch, images, setImages }) => {
     {
       onSuccess: (data) => {
         toastify("success", data?.message);
+
         handleFetch();
+        setInitialValues(initialState);
+        navigate(`/experience`);
       },
       onError: (err) => {
         toastify("error", err?.message);

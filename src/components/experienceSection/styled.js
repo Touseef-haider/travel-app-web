@@ -89,6 +89,6 @@ export const ExperienceSection = styled.div`
     grid-template-columns: repeat(3, 1fr);
   }
   .gallery img {
-    width: auto;
+    width: 100%;
   }
 `;
