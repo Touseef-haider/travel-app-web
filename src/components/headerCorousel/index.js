@@ -27,7 +27,7 @@ const HeaderCourosel = ({ data }) => {
           pauseIconColor="white"
           pauseIconSize="40px"
           slideBackgroundColor="darkgrey"
-          slideImageFit="cover"
+          slideImageFit="contain"
           thumbnails={true}
           thumbnailWidth="150px"
           style={{
