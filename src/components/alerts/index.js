@@ -128,10 +128,7 @@ const ExperienceSection = ({
                   <span>{timeAgo(cat?.created_at)}</span>
                 </p>
               </div>
-              <label htmlFor="p" className="label">
-                description:
-              </label>
-              <div dangerouslySetInnerHTML={{ __html: cat?.description }}></div>
+
               <div className="gallery">
                 {Array.isArray(cat?.images) && cat?.images.length > 0
                   ? cat?.images?.map((img) => <img src={img} alt="img" />)
