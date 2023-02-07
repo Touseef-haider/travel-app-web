@@ -63,7 +63,7 @@ const ExperienceSection = ({
     <S.ExperienceSection>
       {Array.isArray(data) &&
         data
-          ?.filter((i) => i?.category === filterBy)
+          ?.filter((i) => i?.category === filterBy && i?.is_active)
           ?.map((cat, index) => (
             <div className="section" key={cat?.description}>
               <div
