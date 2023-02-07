@@ -10,6 +10,7 @@ import { timeAgo } from "../../utils/formatDate";
 import { useState } from "react";
 import { useRef } from "react";
 import { useEffect } from "react";
+import theme from "../../globalStyles/theme";
 
 const ExperienceSection = ({
   data,
@@ -94,7 +95,14 @@ const ExperienceSection = ({
               <div
                 className="like"
                 style={{
-                  backgroundColor: "white",
+                  backgroundColor: `${
+                    cat?.liked_by?.includes(profile?._id)
+                      ? theme.colors.primary
+                      : ""
+                  }`,
+                  boxShadow: "0 0 5px 0 !important",
+                  marginTop: "10px",
+                  borderRadius: "50%",
                 }}
                 onClick={(e) => {
                   handleLike(
@@ -128,9 +136,6 @@ const ExperienceSection = ({
                   <span>{timeAgo(cat?.created_at)}</span>
                 </p>
               </div>
-              <label htmlFor="p" className="label">
-                description:
-              </label>
               <div dangerouslySetInnerHTML={{ __html: cat?.description }}></div>
               <div className="gallery">
                 {Array.isArray(cat?.images) && cat?.images.length > 0

@@ -48,7 +48,7 @@ const SinglePlace = () => {
           </div>
           <div>
             <div className="availability">
-              <h5>Accessible For</h5>
+              <h5>Available For</h5>
               {data?.accessibilities
                 ?.filter((i) => i?.type === "individual")
                 ?.map((a) => (
