@@ -30,7 +30,8 @@ const SinglePlace = () => {
   return (
     <AuthLayout>
       <S.SinglePlace>
-        <h1 className="primary mt-20">{data?.category?.name}</h1>
+        <h1>{data?.name}</h1>
+        <small className="primary mt-20">{data?.category?.name}</small>
         {data?.images?.length > 0 && (
           <HeaderCourosel
             data={
