@@ -24,9 +24,11 @@ const Select = ({
         <option disabled value="" selected>
           {selectOption}
         </option>
-        {options?.map((opt) => (
-          <option value={opt?.value}>{opt?.item}</option>
-        ))}
+        {Array.isArray(options) &&
+          options.length > 0 &&
+          options?.map((opt) => (
+            <option value={opt?.value}>{opt?.item}</option>
+          ))}
       </select>
       <small className="error">{error ? error : ""}</small>
     </S.Select>

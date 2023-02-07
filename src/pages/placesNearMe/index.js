@@ -84,7 +84,11 @@ const PlacesNearMe = () => {
             }}
             value={province}
             selectOption="select province"
-            options={provinces?.map((p) => ({ value: p?._id, item: p?.name }))}
+            options={
+              Array.isArray(provinces) &&
+              province?.length > 0 &&
+              provinces?.map((p) => ({ value: p?._id, item: p?.name }))
+            }
           />
           {province && (
             <Select
