@@ -16,6 +16,9 @@ export const SinglePlace = styled.div`
     margin-bottom: 50px;
   }
   .hotel > * {
+    padding: 10px !important;
+  }
+  .hotels p {
     padding: 10px;
   }
   .hotels h4 {
@@ -27,6 +30,9 @@ export const SinglePlace = styled.div`
     margin-bottom: 20px;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1) !important;
     padding-bottom: 20px;
+  }
+  .hotel small {
+    padding: 10px !important;
   }
   .hotel img {
     width: 100%;

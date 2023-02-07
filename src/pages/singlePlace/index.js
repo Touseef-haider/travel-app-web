@@ -92,8 +92,10 @@ const SinglePlace = () => {
               )}
               <h4>{h?.name}</h4>
               <h4>{h?.stars} Stars</h4>
-              <p dangerouslySetInnerHTML={{ __html: h?.description }}></p>
-              <small>{h?.location}</small>
+              <small
+                dangerouslySetInnerHTML={{ __html: h?.description }}
+              ></small>
+              <p>{h?.location}</p>
             </div>
           ))}
         </div>

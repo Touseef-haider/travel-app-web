@@ -34,7 +34,7 @@ const ExperienceCard = ({ data }) => {
                 <div className="symbol">
                   <img src={Pointer} alt="sym" />
                 </div>
-                <p style={{ alignSelf: "center" }}>{d?.location}</p>
+                <small style={{ alignSelf: "center" }}>{d?.location}</small>
               </div>
             </div>
           ))}

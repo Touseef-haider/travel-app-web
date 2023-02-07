@@ -19,6 +19,10 @@ export const ExperienceCard = styled.div`
   }
   .card small {
     font-size: 13px;
+    padding: 10px;
+  }
+  .card p {
+    padding: 10px;
   }
   .card img {
     width: 100%;
