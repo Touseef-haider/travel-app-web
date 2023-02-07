@@ -69,6 +69,8 @@ const PostExperience = ({ handleFetch, images, setImages }) => {
 
         handleFetch();
         setInitialValues(initialState);
+        setImages([]);
+
         navigate(`/experience`);
       },
       onError: (err) => {

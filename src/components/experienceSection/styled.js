@@ -26,10 +26,12 @@ export const ExperienceSection = styled.div`
   .controls {
     position: absolute;
     padding: 10px;
-    right: 0;
+    right: 10px;
+    z-index: 343;
     display: flex;
     border-radius: 20px;
-    top: 20px;
+    cursor: pointer;
+    top: 30px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px !important;
   }
 
@@ -56,12 +58,10 @@ export const ExperienceSection = styled.div`
     padding: 3px;
     cursor: pointer;
     position: absolute;
-    bottom: 10px;
-    left: 20px;
+    box-shadow: 0 0 5px 0 !important;
+    bottom: -25px;
+    left: 0px;
     z-index: 2 !important;
-    /* border-radius: 50%; */
-    /* background-color: transparent; */
-    /* box-shadow: 0 0 5px 0 !important;   */
   }
   .liked-length {
     position: absolute;
@@ -85,10 +85,13 @@ export const ExperienceSection = styled.div`
   }
 
   .gallery {
+    height: 300px !important;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
   }
   .gallery img {
     width: 100%;
+    height: 100%;
   }
 `;

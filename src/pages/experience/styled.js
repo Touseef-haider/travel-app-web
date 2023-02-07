@@ -38,7 +38,8 @@ export const Experience = styled.div`
   }
   .image-holder .image {
     width: 100%;
-    object-fit: cover;
+    height: 100%;
+    object-fit: contain;
   }
   @media (max-width: ${({ theme }) => theme.breakPoints.small}) {
     grid-template-columns: 1fr !important;

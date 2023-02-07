@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const Comment = styled.div`
+  margin-bottom: 20px;
   .edit {
     position: absolute;
     right: 40px;
@@ -14,6 +15,7 @@ export const Comment = styled.div`
   .comment {
     margin-top: 35px !important;
     position: relative;
+    /* margin-bottom: 20px; */
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1) !important;
     padding: 10px;
   }

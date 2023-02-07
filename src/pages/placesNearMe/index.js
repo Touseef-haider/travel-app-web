@@ -14,6 +14,7 @@ import { useEffect } from "react";
 
 const PlacesNearMe = () => {
   const [province, setProvince] = useState("");
+  const [filter, setFilter] = useState({});
   const [city, setCity] = useState("");
   const [data, setData] = useState([]);
   const [defaultValue, setDefaultValue] = useState({
@@ -27,10 +28,8 @@ const PlacesNearMe = () => {
     },
     zoom: 20,
   });
-  console.log(defaultValue);
   const getLocation = () => {
     navigator.geolocation.getCurrentPosition((pos) => {
-      console.log("po", pos);
       setDefaultValue({
         center: {
           lat: pos?.coords.latitude,
@@ -46,15 +45,11 @@ const PlacesNearMe = () => {
   useEffect(() => {
     getLocation();
   }, []);
-  const { refetch } = useQuery(
-    "getPlaces",
-    () => apiService.getMapsLocations(),
-    {
-      onSuccess: (data) => {
-        setData(data);
-      },
-    }
-  );
+  useQuery("getPlaces", () => apiService.getMapsLocations(), {
+    onSuccess: (data) => {
+      setData(data);
+    },
+  });
   const { data: categories } = useQuery("getCat", () =>
     apiService.getCategories()
   );
@@ -70,6 +65,8 @@ const PlacesNearMe = () => {
           data={Array.isArray(data) && data?.length > 0 ? data : []}
         />
         <Corousel
+          filter={filter}
+          setFilter={setFilter}
           deviceType="mobile"
           data={
             Array.isArray(categories) && categories?.length > 0
@@ -83,6 +80,7 @@ const PlacesNearMe = () => {
             placeholder="All Provinces"
             onChange={(e) => {
               setProvince(e.target.value);
+              setCity("");
             }}
             value={province}
             selectOption="select province"
@@ -95,13 +93,12 @@ const PlacesNearMe = () => {
                 setCity(e.target.value);
                 const pr = provinces?.find((p) => p?._id === province);
                 const c = pr?.cities?.find((c) => c?._id === e.target.value);
-                setData(
-                  data?.filter(
-                    (d) =>
-                      d?.country?.province?._id === province &&
-                      d?.country?.city === c?.name
-                  )
-                );
+
+                setFilter({ pr, c });
+                if (e.target.value?.length <= 0) {
+                  console.log(e.target.value);
+                  setFilter({});
+                }
               }}
               value={city}
               selectOption="select city"
@@ -113,19 +110,28 @@ const PlacesNearMe = () => {
                 }))}
             />
           )}
-          {(province || city) && (
+          {Object.keys(filter).length > 0 && (
             <Button
               title="clear filter"
               onClick={() => {
-                setProvince("");
-                setCity("");
-                refetch();
+                setFilter({});
               }}
             />
           )}
         </div>
 
-        <ExperienceCard data={data} />
+        <ExperienceCard
+          data={
+            (Object.keys(filter).length > 0 &&
+              data?.filter(
+                (d) =>
+                  (d?.country?.province?._id === filter?.pr?._id &&
+                    d?.country?.city === filter?.c?.name) ||
+                  d?.category?.name === filter?.cat?.name
+              )) ||
+            data
+          }
+        />
       </S.PlacesNearMe>
     </AuthLayout>
   );
