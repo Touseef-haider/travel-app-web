@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 export const PlacesNearMe = styled.div`
+  font-family: "Open Sans", sans-serif;
+  font-family: "Roboto", sans-serif;
   h3 {
     padding: 0 50px;
   }
