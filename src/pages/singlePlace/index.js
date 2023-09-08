@@ -4,6 +4,8 @@ import AuthLayout from "../../layouts/authLayout";
 import HeaderCourosel from "../../components/headerCorousel/index";
 import * as S from "./styled";
 import { images } from "../placesNearMe";
+import ReactStars from "react-rating-stars-component";
+
 import Pointer from "../../assets/point.png";
 import Tag from "../../components/tag";
 import { useLocation } from "react-router-dom";
@@ -72,6 +74,18 @@ const SinglePlace = () => {
         >
           <img src={Pointer} width={30} height={30} />
           <p>{data?.location}</p>
+
+        </div>
+        <div className="d-flex align-items-center gap-5" style={{margin:"20px 5px"}} >
+
+          <label>Rating:</label>
+          <ReactStars
+            count={5}
+            size={24}
+
+            value={data?.rating}
+            activeColor="#ffd700"
+          />
         </div>
         <div className="d-flex align-items-center gap-5">
           <img src={Pointer} width={30} height={30} />

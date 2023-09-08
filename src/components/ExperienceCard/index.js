@@ -1,10 +1,26 @@
 import React from "react";
 import * as S from "./styled.js";
 import Pointer from "../../assets/point.png";
+import ReactStars from "react-rating-stars-component";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useMutation } from "react-query";
+import apiService from "../../services/apiService.js";
 
 const ExperienceCard = ({ data }) => {
   const navigate = useNavigate();
+  const ratingMutation = useMutation((data) => apiService.updateParticularMapLocation(data))
+  const [count, setCount] = useState(5)
+
+  const ratingChanged = (newRating, id) => {
+    console.log(newRating, id);
+    setCount(newRating)
+    ratingMutation.mutate({
+      id,
+      rating: newRating
+    })
+
+  };
   return (
     <S.ExperienceCard>
       <div className="experience-section">
@@ -13,7 +29,6 @@ const ExperienceCard = ({ data }) => {
           data?.map((d) => (
             <div
               className="card"
-              onClick={() => navigate(`/single-place/${d?._id}`)}
             >
               <img
                 src={
@@ -22,6 +37,8 @@ const ExperienceCard = ({ data }) => {
                     : "https://traveling-images.s3.ap-northeast-1.amazonaws.com/1673027721397-1.jpg"
                 }
                 alt="file"
+                onClick={() => navigate(`/single-place/${d?._id}`)}
+
               />
               <div>
                 <h5>{d?.name}</h5>
@@ -36,6 +53,25 @@ const ExperienceCard = ({ data }) => {
                 </div>
                 <small style={{ alignSelf: "center" }}>{d?.location}</small>
               </div>
+              <h3>Rating</h3>
+              
+              {
+                d?.rating ?
+                  <ReactStars
+                    count={5}
+                    size={24}
+
+                  value={d?.rating}
+                    activeColor="#ffd700"
+                  /> :
+                  <ReactStars
+                    onChange={(r) => ratingChanged(r, d?._id)}
+                    value={count}
+                    count={5}
+                    size={24}
+                    activeColor="#ffd700"
+                  />
+              }
             </div>
           ))}
       </div>

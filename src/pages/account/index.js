@@ -24,6 +24,7 @@ const Account = () => {
 
   useQuery("getProfile", () => apiService.getOwnProfile(), {
     onSuccess: (data) => {
+      console.log("data",data)
       setInitialState(data);
     },
   });

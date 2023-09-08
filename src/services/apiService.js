@@ -79,12 +79,22 @@ class ApiService extends BaseService {
     return this.post("/upload", file);
   }
 
+  addRating(data){
+    return this.post("/rating",data)
+  }
+
   getMapsLocations() {
     return this.get("/mapLocation");
   }
 
   getParticularPlace(id) {
     return this.get(`/mapLocation/${id}`);
+  }
+
+  updateParticularMapLocation(data) {
+    const id = data?.id;
+    delete data.id
+    return this.put(`/mapLocation/${id}`,data);
   }
 
   getProvinces() {
