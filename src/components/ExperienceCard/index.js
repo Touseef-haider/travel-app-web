@@ -37,6 +37,11 @@ const ExperienceCard = ({ data }) => {
                     : "https://traveling-images.s3.ap-northeast-1.amazonaws.com/1673027721397-1.jpg"
                 }
                 alt="file"
+                style={{
+                  width:"100%",
+                  // height:"100%",
+                  objectFit:"cover"
+                }}
                 onClick={() => navigate(`/single-place/${d?._id}`)}
 
               />

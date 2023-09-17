@@ -4,13 +4,15 @@ export const ExperienceCard = styled.div`
   .experience-section {
     padding: 20px 50px;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-flow: row;
     gap: 20px;
   }
   .card {
     cursor: pointer;
     border-radius: 10px;
     margin-bottom: 20px;
+    box-sizing: border-box;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1) !important;
   }
   .card h4 {
@@ -20,12 +22,12 @@ export const ExperienceCard = styled.div`
   .card small {
     font-size: 13px;
     padding: 10px;
+    /* width: 100%; */
   }
   .card p {
     padding: 10px;
   }
   .card img {
-    width: 100%;
     padding: 0 !important;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
