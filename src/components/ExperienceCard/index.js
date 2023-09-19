@@ -28,6 +28,7 @@ const ExperienceCard = ({ data }) => {
           data.length > 0 &&
           data?.map((d) => (
             <div
+            key={data?._id}
               className="card"
             >
               <img
@@ -65,6 +66,8 @@ const ExperienceCard = ({ data }) => {
                   <ReactStars
                     count={5}
                     size={24}
+                    onChange={(r) => ratingChanged(r, d?._id)}
+
 
                   value={d?.rating}
                     activeColor="#ffd700"
